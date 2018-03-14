@@ -41,7 +41,7 @@ public class KPIRepo {
      }
 
     public static String createtable(){
-        return "CREATE TABLE " + KPI.TABLE + "("
+        return "CREATE TABLE IF NOT EXISTS " + KPI.TABLE + "("
                 + KPI.KEY_KPIPrimary + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KPI.KEY_MemberID + " TEXT, "
                 + KPI.KEY_FixtureID + " TEXT,"

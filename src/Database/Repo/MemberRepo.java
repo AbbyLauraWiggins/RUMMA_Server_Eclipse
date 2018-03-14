@@ -42,7 +42,7 @@ public class MemberRepo {
     }
 
     public static String createTable() {
-        return "CREATE TABLE " + Member.TABLE + "("
+        return "CREATE TABLE IF NOT EXISTS " + Member.TABLE + "("
                 + Member.KEY_MemberId + " TEXT PRIMARY KEY,"
                 + Member.KEY_Name + " TEXT,"
                 + Member.KEY_Email + " TEXT,"
@@ -56,6 +56,7 @@ public class MemberRepo {
 
 
     public int insert(Member member) {
+   	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + Member.TABLE
    			 + "("
              + Member.KEY_MemberId + ","
@@ -80,16 +81,14 @@ public class MemberRepo {
 		  		prepStatement.setString(7, member.getResponsibilities());
 		  		prepStatement.setString(8, member.getTeamId());
 		  		prepStatement.setString(9, member.getPermissions());
-		  		  	prepStatement.executeUpdate();
+		  		retVal = prepStatement.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+  
    	 
-   	 
-   	 
-   	 
-       return 1;
+       return retVal;
     }
 
 

@@ -22,12 +22,8 @@ public class DatabaseSetup {
 	Connection connection = null;
 
 	public DatabaseSetup() {
-	}
-	
-	public static void main(String[] args) {
 		String connectString = "jdbc:sqlite:rummaServerDB.db";
-		DatabaseSetup rummaDB = new DatabaseSetup();
-		rummaDB.connectToDB(connectString);
+		connectToDB(connectString);
 
 	}
 
