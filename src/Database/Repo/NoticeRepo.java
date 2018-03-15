@@ -96,6 +96,7 @@ public class NoticeRepo {
 					row.add(rs.getString("MemberId"));
 					row.add(rs.getString("Contents"));
 					row.add(rs.getString("Date"));
+					row.add(rs.getString("NoticeId"));
 					notices.add(row);
 				}
 			}

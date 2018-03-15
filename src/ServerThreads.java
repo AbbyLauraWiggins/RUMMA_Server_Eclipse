@@ -31,6 +31,7 @@ public class ServerThreads extends Thread{
 				HashMap<String, Object> mapIn = (HashMap<String, Object>) inFromClient.readObject();
             
             if(mapIn.get("TYPE").equals("NOTICE")){
+            	System.out.println("TYPE = NOTICE");
             	outToClient.writeObject(serviceNotice(mapIn));
             }
             
@@ -55,26 +56,28 @@ public class ServerThreads extends Thread{
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private Object serviceNotice(HashMap mapIn){
+   	 System.out.println("Service notice");
    	 
-   	 if(mapIn.get("CONTENT") instanceof String){
-   		 if(mapIn.get("CONTENT").equals("show")){
+   	 //if(mapIn.get("CONTENT") instanceof String){
+   		 //if(mapIn.get("CONTENT").equals("show")){
    			 NoticeRepo noticeRepo = new NoticeRepo();
          	 ArrayList<ArrayList<String>> notices = noticeRepo.getNotices();
-         	 Object out = (ArrayList<ArrayList<String>>) notices;
-         	 return out;
-   		 }
+         	 System.out.println(notices);
+         	// Object out = (ArrayList<ArrayList<String>>) notices;
+         	// return out;
+   		 //}
       	 
-   	 }else{ 
+   	 //}else{ 
       	//TODO change this for being sent an Arraylist<Arraylist>
    		 ArrayList<ArrayList<String>> noticesToAdd = (ArrayList<ArrayList<String>>) mapIn.get("CONTENT");
-      	 NoticeRepo noticeRepo = new NoticeRepo();
+      	 //NoticeRepo noticeRepo = new NoticeRepo();
    		 for(ArrayList al : noticesToAdd){
    			 Notice notice = new Notice();
              notice.setMemberId((String) al.get(0)); //for testing
              notice.setDate((String) al.get(2));
              notice.setContents((String) al.get(1));
              noticeRepo.insert(notice);
-   		 }
+   		// }
           noticeRepo.closeConnection();
           
           Object out = (String) "Notices added";
