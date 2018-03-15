@@ -1,12 +1,15 @@
 package Database.Repo;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import Database.Schema.Fixture;
 import Database.Schema.Notice;
+
 
 /**
  * Created by abbylaura on 02/03/2018.
@@ -69,8 +72,41 @@ public class NoticeRepo {
 			}
     }
 
-    public void delete() {
-
+    public ArrayList<ArrayList<String>> getNotices(){
+   	 
+   	 ArrayList<ArrayList<String>> notices = new ArrayList<ArrayList<String>>();
+   	 
+   	 
+   	 String getLast = "SELECT * FROM " + Notice.TABLE; 
+   			 //" INNER JOIN (" +
+   			 //"SELECT " + Notice.KEY_MemberId + ", " + Notice.KEY_Date + ", MAX(" + Notice.KEY_Date + ") " +
+   			 //"AS maxDate FROM " + Notice.TABLE + " GROUP BY " + Notice.KEY_MemberId + ") " + " maxSelect " +
+   			 //"ON " + Notice.KEY_MemberId + " = " + "maxSelect.MemberId";
+ 
+   	 
+   	 try {
+			PreparedStatement prepStatement = connection.prepareStatement(getLast);
+			ResultSet rs = prepStatement.executeQuery();
+			if(!rs.next()){
+				System.out.println("NoticeRepo: getLastNotice prepStatement returned null");
+				return null;
+			}else{
+				while(rs.next()){
+					ArrayList<String> row = new ArrayList<String>();
+					row.add(rs.getString("MemberId"));
+					row.add(rs.getString("Contents"));
+					row.add(rs.getString("Date"));
+					notices.add(row);
+				}
+			}
+			
+			
+   	 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+   	 }
+   	 
+   	 return notices;
     }
 
 

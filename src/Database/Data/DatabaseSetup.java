@@ -20,14 +20,13 @@ import Database.Schema.TeamFixtures;
 public class DatabaseSetup {
 	Statement statement = null;
 	Connection connection = null;
+	String connectString;
 
 	public DatabaseSetup() {
-		String connectString = "jdbc:sqlite:rummaServerDB.db";
-		connectToDB(connectString);
-
+		connectString = "jdbc:sqlite:rummaServerDB.db";
 	}
 
-	public void connectToDB(String connectString) {
+	public void connectToDB() {
 
 		try {
 			connection = DriverManager.getConnection(connectString);
@@ -39,25 +38,23 @@ public class DatabaseSetup {
 		}
 
 		if (connection != null) {
-			System.out.println("Database accessed!");
+			System.out.println("Database accessed");
 		} else {
 			System.out.println("Failed to make connection");
 			System.exit(1);
 		}
 
-		deleteTables();
-		createTables();
-		insertTables();
-		
+	}
+	
+	public void closeDatabase(){
 		try {
 			connection.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 	
-	private void createTables(){
+	public void createTables(){
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(FixtureRepo.createTable());
@@ -68,17 +65,14 @@ public class DatabaseSetup {
 			statement.executeUpdate(TeamFixturesRepo.createTable());
 			statement.executeUpdate(NoticeRepo.createTable());
 			statement.executeUpdate(KPIRepo.createtable());
-			System.out.println("Resident table created in database");
 		} catch (SQLException ex1) {
 			ex1.printStackTrace();
 		}
 	}
 	
-	private void insertTables(){
-			
-	}
 	
-	private void deleteTables(){
+	
+	public void deleteTables(){
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate("DROP TABLE IF EXISTS " + Fixture.TABLE);

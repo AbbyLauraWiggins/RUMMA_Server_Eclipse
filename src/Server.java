@@ -1,11 +1,17 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import Database.Data.DatabaseSetup;
 
 
 public class Server{
     public static void main(String[] args){
         //super();
+   	  DatabaseSetup db = new DatabaseSetup();
+   	  db.connectToDB();
+   	  db.deleteTables();
+   	  db.createTables(); //create tables if they dont already exist
+   	  db.closeDatabase();
 
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
