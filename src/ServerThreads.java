@@ -55,14 +55,15 @@ public class ServerThreads extends Thread{
     
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	private ArrayList<ArrayList<String>> serviceNotice(HashMap mapIn){
+	private ArrayList<Notice> serviceNotice(HashMap mapIn){
    	 System.out.println("Service notice");
 		 NoticeRepo noticeRepo = new NoticeRepo();
 
    	 
    	 if(!(mapIn.get("CONTENT") instanceof String)){
    		 //Add all new notices to the server, then return with servers copy of Notice Table
-      	 ArrayList<Notice> noticesToAdd = convertToNotices((ArrayList<ArrayList<String>>) mapIn.get("CONTENT")); //INSERT THESE
+      	 //ArrayList<Notice> noticesToAdd = convertToNotices((ArrayList<String>) mapIn.get("CONTENT")); //INSERT THESE
+      	 ArrayList<Notice> noticesToAdd = (ArrayList<Notice>) mapIn.get("CLASS");
       	 
       	 if(noticesToAdd != null){
       		 for(Notice n: noticesToAdd){
@@ -73,7 +74,7 @@ public class ServerThreads extends Thread{
    	 
    	 //ArrayList<Notice> noticeTableObj = noticeRepo.getTableObject(); //gets ALL notices on server
    	 
-   	 return noticeRepo.getNotices();
+   	 return noticeRepo.getTableObject();
     }
     
     private ArrayList<Notice> convertToNotices(ArrayList<ArrayList<String>> notices){
