@@ -53,7 +53,7 @@ public class NoticeRepo {
     }
 
     public void insert(Notice notice) {
-   	  String noticeID = generateNewID();
+   	  System.out.println("in insert notice");
    	  
    	  String insertStatement = "INSERT INTO " + Notice.TABLE
    			  + "("
@@ -77,29 +77,28 @@ public class NoticeRepo {
     }
 
    
-    public ArrayList<String> getNotices(){
+    public ArrayList<String> getNotices(int tableSize){
    	 
    	 ArrayList<String> notices = new ArrayList<String>();
    	 
    	 
    	 String getLast = "SELECT * FROM " + Notice.TABLE; 
-   			 //" INNER JOIN (" +
-   			 //"SELECT " + Notice.KEY_MemberId + ", " + Notice.KEY_Date + ", MAX(" + Notice.KEY_Date + ") " +
-   			 //"AS maxDate FROM " + Notice.TABLE + " GROUP BY " + Notice.KEY_MemberId + ") " + " maxSelect " +
-   			 //"ON " + Notice.KEY_MemberId + " = " + "maxSelect.MemberId";
- 
-   	 
+   			 
    	 try {
 			PreparedStatement prepStatement = connection.prepareStatement(getLast);
 			ResultSet rs = prepStatement.executeQuery();
 			if(!rs.next()){
-				System.out.println("NoticeRepo: getLastNotice prepStatement returned null");
-				return null;
+				System.out.println("CODE:4698:EMPTYBUFFER");
+	   		notices.add("CODE:4698:EMPTYBUFFER");
 			}else{
+				int counter = 0;
 				do{
-					String str = (String.valueOf(rs.getString("NoticeId")) + "4h4f" + rs.getString("MemberId") + "4h4f" + rs.getString("Contents") + "4h4f" + rs.getString("Date"));
-					System.out.println("notice repo: " + str);
-					notices.add(str);
+					if(counter >= tableSize){
+						String str = (String.valueOf(rs.getString("NoticeId")) + "4h4f" + rs.getString("MemberId") + "4h4f" + rs.getString("Contents") + "4h4f" + rs.getString("Date"));
+						System.out.println("notice repo: " + str);
+						notices.add(str);
+					}
+					counter++;
 				}while(rs.next());
 			}
 			
@@ -108,68 +107,11 @@ public class NoticeRepo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
    	 }
+   	
    	 
    	 return notices;
     }
 
-    /*
-     * @returns result - an ArrayList of type Notice which represents all notices
-     * 
-     */
-    public ArrayList<Notice> getTableObject(){
-       ArrayList<Notice> result = new ArrayList<>();
-
-       String selectQuery = " SELECT * FROM " + Notice.TABLE;
-
-       try {
- 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
- 			ResultSet rs = prepStatement.executeQuery();
- 			if(!rs.next()){
- 				System.out.println("NoticeRepo: getLastNotice prepStatement returned null");
- 				return null;
- 			}else{
- 				while(rs.next()){
-               Notice notice = new Notice();
- 					notice.setMemberId(rs.getString("MemberId"));
- 					notice.setContents(rs.getString("Contents"));
- 					notice.setDate(rs.getString("Date"));
- 					notice.setNoticeId(rs.getString("NoticeId"));
- 					result.add(notice);
- 				}
- 			}
- 			
- 			
-    	 } catch (SQLException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
-    	 }
-    	 
-    	
-       return result;
-   }
-
-    private String generateNewID(){
-   	 String selectQuery = "SELECT NoticeId FROM Notice WHERE NoticeId=(SELECT max(NoticeId) FROM Notice)";
-   	 String lastID = "0";
-   	 try {
-  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
-  			ResultSet rs = prepStatement.executeQuery();
-  			if(!rs.next()){
-  				System.out.println("NoticeRepo: prepStatement returned null");
-  				return "1";
-  			}else{
-  				while(rs.next()){
-               lastID = rs.getString("NoticeID");
-  				}
-  			}
-  		
-     	 } catch (SQLException e) {
-  			// TODO Auto-generated catch block
-  			e.printStackTrace();
-     	 }
-   	 
-   	 return String.valueOf(Integer.parseInt(lastID) + 1);
-    }
     
 
 }

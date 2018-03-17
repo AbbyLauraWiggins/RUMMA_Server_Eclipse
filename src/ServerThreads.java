@@ -29,17 +29,22 @@ public class ServerThreads extends Thread{
       	   ObjectOutputStream outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
             ObjectInputStream inFromClient = new ObjectInputStream(clientSocket.getInputStream());
             
-				//HashMap<String, Object> mapIn = (HashMap<String, Object>) inFromClient.readObject();
 
-            String type = (String) inFromClient.readObject();
+            String type = (String) inFromClient.readObject(); //DATABASE CLASS TO ADD TO
+            
+            int tableSize = (int) inFromClient.readObject(); //SIZE OF CLIENT DB TABLE
+            System.out.println("table size: " + String.valueOf(tableSize));
+            
             @SuppressWarnings("unchecked")
 				ArrayList<String> in = (ArrayList<String>) inFromClient.readObject();
             
             if(type.equals("NOTICE")){ //mapIn.get("TYPE").equals("NOTICE")){
             	System.out.println("TYPE = NOTICE");
-            	ArrayList<String> outList = serviceNotice(in);
-            	outToClient.writeObject(outList);
+	            ArrayList<String> outList = serviceNotice(in, tableSize);
+	            System.out.println("Out To Client: " + outList.toString());
+	            outToClient.writeObject(outList);
             }
+            
             
             clientSocket.close();
             return;
@@ -62,7 +67,7 @@ public class ServerThreads extends Thread{
     }
     
     
-	private ArrayList<String> serviceNotice(ArrayList<String> in){ 
+	private ArrayList<String> serviceNotice(ArrayList<String> in, int tableSize){ 
    	 System.out.println("Service notice" + in.toString());
 		 NoticeRepo noticeRepo = new NoticeRepo();
 
@@ -71,20 +76,24 @@ public class ServerThreads extends Thread{
 		 for(String al: in){
 			 System.out.println(al);
 			 
-          Notice notice = new Notice();
-          String[] splitter = al.split("4h4f");
-          System.out.println(splitter[0] + " " + splitter[1] + " " + splitter[2]);
-          notice.setMemberId((String) splitter[0]);
-          notice.setContents((String) splitter[1]);
-          notice.setDate((String) splitter[2]);
-          
-                   
-          noticeRepo.insert(notice);
+			 if(!(al.equals("CODE:4698:EMPTYBUFFER"))){ //UNIQUE EMPTY BUFFER STRING = empty buffer
+
+	          Notice notice = new Notice();
+	          String[] splitter = al.split("4h4f");
+	          System.out.println(splitter[0] + " " + splitter[1] + " " + splitter[2]);
+	          notice.setMemberId((String) splitter[0]);
+	          notice.setContents((String) splitter[1]);
+	          notice.setDate((String) splitter[2]);
+	          
+	                   
+	          noticeRepo.insert(notice);
+			 }
+			 
       }
    	 
    	 //ArrayList<Notice> noticeTableObj = noticeRepo.getTableObject(); //gets ALL notices on server
    	 
-   	 return noticeRepo.getNotices();
+   	 return noticeRepo.getNotices(tableSize);
     }
     
    
