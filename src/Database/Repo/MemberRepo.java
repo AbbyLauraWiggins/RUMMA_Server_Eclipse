@@ -3,10 +3,13 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Fixture;
 import Database.Schema.Member;
+import Database.Schema.Notice;
 
 /**
  * Created by abbylaura on 02/03/2018.
@@ -92,7 +95,45 @@ public class MemberRepo {
     }
 
 
-    public void delete() {
-       
+    public ArrayList<String> getMembers(){
+   	 System.out.println("in get members");
+  	  
+   	 ArrayList<String> members = new ArrayList<>();
+   	 
+   	 String selectQuery = "SELECT * FROM MEMBERS";
+   	 try {
+ 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+ 			ResultSet rs = prepStatement.executeQuery();
+ 			if(!rs.next()){
+ 				System.out.println("THERE ARE NO MEMBERS");
+ 	   		members.add("CODE:4699:NOMEMBERS");
+ 			}else{
+ 				do{
+ 					String str = 
+ 							rs.getString("MemberId") + "4h4f" +
+ 							rs.getString("Name") + "4h4f" +
+ 							rs.getString("Email") + "4h4f" +
+ 							rs.getString("Password") + "4h4f" +
+ 							rs.getString("DOB") + "4h4f" +
+ 							rs.getString("Positions") + "4h4f" +
+ 							rs.getString("Responsibilities") + "4h4f" +
+ 							rs.getString("TeamId") + "4h4f" +
+ 							rs.getString("Permissions");
+ 					
+ 					System.out.println(str);
+ 					
+ 					members.add(str);
+ 					
+ 				}while(rs.next());
+ 			}
+ 			
+ 			
+    	 } catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+    	 }
+    	
+    	 
+    	 return members;
     }
 }

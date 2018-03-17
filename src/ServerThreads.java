@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import Database.Repo.MemberRepo;
 import Database.Repo.NoticeRepo;
 import Database.Schema.Notice;
 
@@ -44,6 +45,13 @@ public class ServerThreads extends Thread{
 	            System.out.println("Out To Client: " + outList.toString());
 	            outToClient.writeObject(outList);
             }
+            else if(type.equals("LOGIN")){
+            	System.out.println("TYPE = LOGIN");
+            	ArrayList<String> outList = serviceMembers();
+            	//String valid = checkLogInValidation(in, outList);
+            	outToClient.writeObject(outList);
+            	//outToClient.writeObject(valid);
+            }
             
             
             clientSocket.close();
@@ -66,6 +74,24 @@ public class ServerThreads extends Thread{
         
     }
     
+   private String checkLogInValidation(ArrayList<String> logInDetails, ArrayList<String> outList){
+   	String email = logInDetails.get(0);
+   	String password = logInDetails.get(1);
+   	
+   	for(String ol: outList){
+			 System.out.println(ol);
+			 
+	       Notice notice = new Notice();
+	       String[] splitter = ol.split("4h4f");
+	       
+	       if(splitter[2].equals(email) && splitter[3].equals(password)){
+	      	 return "true";
+	       }	       
+			 
+      }
+      return "false";
+
+   }
     
 	private ArrayList<String> serviceNotice(ArrayList<String> in, int tableSize){ 
    	 System.out.println("Service notice" + in.toString());
@@ -95,6 +121,13 @@ public class ServerThreads extends Thread{
    	 
    	 return noticeRepo.getNotices(tableSize);
     }
-    
+   
+	private ArrayList<String> serviceMembers(){
+		MemberRepo memberRepo = new MemberRepo();
+		
+		ArrayList<String> members = memberRepo.getMembers();
+		
+		return members;
+	}
    
 }
