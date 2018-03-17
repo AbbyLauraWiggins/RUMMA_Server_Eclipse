@@ -18,14 +18,15 @@ public class Notice {
     private String memberId;
     private String contents;
     private String date;
+    private String noticeID;
 
-    //public int getNoticeId() {
-    //    return noticeId;
-    //}
+    public String getNoticeId() {
+        return noticeID;
+    }
 
-    /*
-     * note: no setNoticeId() as this is autoincremented in NoticeRepo
-     */
+    public void setNoticeId(String noticeID){
+   	 this.noticeID = noticeID;
+    }
 
     public String getMemberId() {
         return memberId;

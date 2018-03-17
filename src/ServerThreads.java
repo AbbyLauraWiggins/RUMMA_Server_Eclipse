@@ -55,35 +55,43 @@ public class ServerThreads extends Thread{
     
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	private Object serviceNotice(HashMap mapIn){
+	private ArrayList<ArrayList<String>> serviceNotice(HashMap mapIn){
    	 System.out.println("Service notice");
+		 NoticeRepo noticeRepo = new NoticeRepo();
+
    	 
-   	 //if(mapIn.get("CONTENT") instanceof String){
-   		 //if(mapIn.get("CONTENT").equals("show")){
-   			 NoticeRepo noticeRepo = new NoticeRepo();
-         	 ArrayList<ArrayList<String>> notices = noticeRepo.getNotices();
-         	 System.out.println(notices);
-         	// Object out = (ArrayList<ArrayList<String>>) notices;
-         	// return out;
-   		 //}
+   	 if(!(mapIn.get("CONTENT") instanceof String)){
+   		 //Add all new notices to the server, then return with servers copy of Notice Table
+      	 ArrayList<Notice> noticesToAdd = convertToNotices((ArrayList<ArrayList<String>>) mapIn.get("CONTENT")); //INSERT THESE
       	 
-   	 //}else{ 
-      	//TODO change this for being sent an Arraylist<Arraylist>
-   		 ArrayList<ArrayList<String>> noticesToAdd = (ArrayList<ArrayList<String>>) mapIn.get("CONTENT");
-      	 //NoticeRepo noticeRepo = new NoticeRepo();
-   		 for(ArrayList al : noticesToAdd){
-   			 Notice notice = new Notice();
-             notice.setMemberId((String) al.get(0)); //for testing
-             notice.setDate((String) al.get(2));
-             notice.setContents((String) al.get(1));
-             noticeRepo.insert(notice);
-   		// }
-          noticeRepo.closeConnection();
-          
-          Object out = (String) "Notices added";
-          return out;
-      }
+      	 if(noticesToAdd != null){
+      		 for(Notice n: noticesToAdd){
+         		 noticeRepo.insert(n);
+         	 } 
+      	 }
+       }
    	 
-   	 return null;
+   	 //ArrayList<Notice> noticeTableObj = noticeRepo.getTableObject(); //gets ALL notices on server
+   	 
+   	 return noticeRepo.getNotices();
+    }
+    
+    private ArrayList<Notice> convertToNotices(ArrayList<ArrayList<String>> notices){
+   	 System.out.println("convert to notices");
+   	 ArrayList<Notice> noticeObj = new ArrayList<>();
+   	 if(notices != null){
+   		 for(ArrayList al: notices){
+   			 System.out.println(al);
+   			 Notice notice = new Notice();
+   			 notice.setMemberId((String) al.get(0));
+   			 notice.setContents((String) al.get(1));
+   			 notice.setDate((String) al.get(2));
+   			 
+   			 noticeObj.add(notice);
+
+   		 }
+   	 }
+   	 
+   	 return noticeObj;
     }
 }

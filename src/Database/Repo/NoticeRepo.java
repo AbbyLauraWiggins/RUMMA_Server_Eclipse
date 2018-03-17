@@ -46,15 +46,18 @@ public class NoticeRepo {
 
     public static String createTable() {
         return "CREATE TABLE IF NOT EXISTS " + Notice.TABLE + "("
-                + Notice.KEY_NoticeId + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + Notice.KEY_NoticeId + " TEXT PRIMARY KEY UNIQUE,"
                 + Notice.KEY_MemberId + " TEXT," //FOREIGN KEY FROM MEMBERID
                 + Notice.KEY_Contents + " TEXT,"
                 + Notice.KEY_Date + " TEXT)";
     }
 
     public void insert(Notice notice) {
+   	  String noticeID = generateNewID();
+   	  
    	  String insertStatement = "INSERT INTO " + Notice.TABLE
    			  + "("
+   			  //+ Notice.KEY_NoticeId + ","
               + Notice.KEY_MemberId + "," 
               + Notice.KEY_Contents + ","
               + Notice.KEY_Date + ") "
@@ -62,6 +65,7 @@ public class NoticeRepo {
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
+	  		  	//prepStatement.setString(1, );;
 	  		  	prepStatement.setString(1, notice.getMemberId());;
 	  		  	prepStatement.setString(2, notice.getContents());;
 	  		  	prepStatement.setString(3, notice.getDate());;
@@ -72,6 +76,7 @@ public class NoticeRepo {
 			}
     }
 
+   
     public ArrayList<ArrayList<String>> getNotices(){
    	 
    	 ArrayList<ArrayList<String>> notices = new ArrayList<ArrayList<String>>();
@@ -96,7 +101,6 @@ public class NoticeRepo {
 					row.add(rs.getString("MemberId"));
 					row.add(rs.getString("Contents"));
 					row.add(rs.getString("Date"));
-					row.add(rs.getString("NoticeId"));
 					notices.add(row);
 				}
 			}
@@ -110,5 +114,64 @@ public class NoticeRepo {
    	 return notices;
     }
 
+    /*
+     * @returns result - an ArrayList of type Notice which represents all notices
+     * 
+     */
+    public ArrayList<Notice> getTableObject(){
+       ArrayList<Notice> result = new ArrayList<>();
+
+       String selectQuery = " SELECT * FROM " + Notice.TABLE;
+
+       try {
+ 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+ 			ResultSet rs = prepStatement.executeQuery();
+ 			if(!rs.next()){
+ 				System.out.println("NoticeRepo: getLastNotice prepStatement returned null");
+ 				return null;
+ 			}else{
+ 				while(rs.next()){
+               Notice notice = new Notice();
+ 					notice.setMemberId(rs.getString("MemberId"));
+ 					notice.setContents(rs.getString("Contents"));
+ 					notice.setDate(rs.getString("Date"));
+ 					notice.setNoticeId(rs.getString("NoticeId"));
+ 					result.add(notice);
+ 				}
+ 			}
+ 			
+ 			
+    	 } catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+    	 }
+    	 
+    	
+       return result;
+   }
+
+    private String generateNewID(){
+   	 String selectQuery = "SELECT NoticeId FROM Notice WHERE NoticeId=(SELECT max(NoticeId) FROM Notice)";
+   	 String lastID = "0";
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("NoticeRepo: prepStatement returned null");
+  				return "1";
+  			}else{
+  				while(rs.next()){
+               lastID = rs.getString("NoticeID");
+  				}
+  			}
+  		
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return String.valueOf(Integer.parseInt(lastID) + 1);
+    }
+    
 
 }
