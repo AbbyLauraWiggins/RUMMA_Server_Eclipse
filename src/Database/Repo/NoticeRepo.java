@@ -46,7 +46,7 @@ public class NoticeRepo {
 
     public static String createTable() {
         return "CREATE TABLE IF NOT EXISTS " + Notice.TABLE + "("
-                + Notice.KEY_NoticeId + " TEXT PRIMARY KEY UNIQUE,"
+                + Notice.KEY_NoticeId + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Notice.KEY_MemberId + " TEXT," //FOREIGN KEY FROM MEMBERID
                 + Notice.KEY_Contents + " TEXT,"
                 + Notice.KEY_Date + " TEXT)";
@@ -62,10 +62,10 @@ public class NoticeRepo {
               + Notice.KEY_Contents + ","
               + Notice.KEY_Date + ") "
 	  			  + "VALUES(?,?,?)";
-	  	  
+   	  	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-	  		  	//prepStatement.setString(1, );;
+	  		  	//prepStatement.setString(1, noticeID);;
 	  		  	prepStatement.setString(1, notice.getMemberId());;
 	  		  	prepStatement.setString(2, notice.getContents());;
 	  		  	prepStatement.setString(3, notice.getDate());;
@@ -77,9 +77,9 @@ public class NoticeRepo {
     }
 
    
-    public ArrayList<ArrayList<String>> getNotices(){
+    public ArrayList<String> getNotices(){
    	 
-   	 ArrayList<ArrayList<String>> notices = new ArrayList<ArrayList<String>>();
+   	 ArrayList<String> notices = new ArrayList<String>();
    	 
    	 
    	 String getLast = "SELECT * FROM " + Notice.TABLE; 
@@ -96,13 +96,11 @@ public class NoticeRepo {
 				System.out.println("NoticeRepo: getLastNotice prepStatement returned null");
 				return null;
 			}else{
-				while(rs.next()){
-					ArrayList<String> row = new ArrayList<String>();
-					row.add(rs.getString("MemberId"));
-					row.add(rs.getString("Contents"));
-					row.add(rs.getString("Date"));
-					notices.add(row);
-				}
+				do{
+					String str = (String.valueOf(rs.getString("NoticeId")) + "4h4f" + rs.getString("MemberId") + "4h4f" + rs.getString("Contents") + "4h4f" + rs.getString("Date"));
+					System.out.println("notice repo: " + str);
+					notices.add(str);
+				}while(rs.next());
 			}
 			
 			

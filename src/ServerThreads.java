@@ -27,12 +27,16 @@ public class ServerThreads extends Thread{
       	   ObjectOutputStream outToClient = new ObjectOutputStream(clientSocket.getOutputStream());
             ObjectInputStream inFromClient = new ObjectInputStream(clientSocket.getInputStream());
             
+				//HashMap<String, Object> mapIn = (HashMap<String, Object>) inFromClient.readObject();
+
+            String type = (String) inFromClient.readObject();
             @SuppressWarnings("unchecked")
-				HashMap<String, Object> mapIn = (HashMap<String, Object>) inFromClient.readObject();
+				ArrayList<String> in = (ArrayList<String>) inFromClient.readObject();
             
-            if(mapIn.get("TYPE").equals("NOTICE")){
+            if(type.equals("NOTICE")){ //mapIn.get("TYPE").equals("NOTICE")){
             	System.out.println("TYPE = NOTICE");
-            	outToClient.writeObject(serviceNotice(mapIn));
+            	ArrayList<String> outList = serviceNotice(in);
+            	outToClient.writeObject(outList);
             }
             
             clientSocket.close();
@@ -54,45 +58,30 @@ public class ServerThreads extends Thread{
     }
     
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	private ArrayList<Notice> serviceNotice(HashMap mapIn){
-   	 System.out.println("Service notice");
+	private ArrayList<String> serviceNotice(ArrayList<String> in){ 
+   	 System.out.println("Service notice" + in.toString());
 		 NoticeRepo noticeRepo = new NoticeRepo();
 
-   	 
-   	 if(!(mapIn.get("CONTENT") instanceof String)){
-   		 //Add all new notices to the server, then return with servers copy of Notice Table
-      	 //ArrayList<Notice> noticesToAdd = convertToNotices((ArrayList<String>) mapIn.get("CONTENT")); //INSERT THESE
-      	 ArrayList<Notice> noticesToAdd = (ArrayList<Notice>) mapIn.get("CLASS");
-      	 
-      	 if(noticesToAdd != null){
-      		 for(Notice n: noticesToAdd){
-         		 noticeRepo.insert(n);
-         	 } 
-      	 }
-       }
+		 
+   	 //add to Notices:
+		 for(String al: in){
+			 System.out.println(al);
+			 
+          Notice notice = new Notice();
+          String[] splitter = al.split("4h4f");
+          System.out.println(splitter[0] + " " + splitter[1] + " " + splitter[2]);
+          notice.setMemberId((String) splitter[0]);
+          notice.setContents((String) splitter[1]);
+          notice.setDate((String) splitter[2]);
+          
+                   
+          noticeRepo.insert(notice);
+      }
    	 
    	 //ArrayList<Notice> noticeTableObj = noticeRepo.getTableObject(); //gets ALL notices on server
    	 
-   	 return noticeRepo.getTableObject();
+   	 return noticeRepo.getNotices();
     }
     
-    private ArrayList<Notice> convertToNotices(ArrayList<ArrayList<String>> notices){
-   	 System.out.println("convert to notices");
-   	 ArrayList<Notice> noticeObj = new ArrayList<>();
-   	 if(notices != null){
-   		 for(ArrayList al: notices){
-   			 System.out.println(al);
-   			 Notice notice = new Notice();
-   			 notice.setMemberId((String) al.get(0));
-   			 notice.setContents((String) al.get(1));
-   			 notice.setDate((String) al.get(2));
-   			 
-   			 noticeObj.add(notice);
-
-   		 }
-   	 }
-   	 
-   	 return noticeObj;
-    }
+   
 }

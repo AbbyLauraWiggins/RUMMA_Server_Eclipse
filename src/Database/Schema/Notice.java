@@ -1,11 +1,12 @@
 package Database.Schema;
 
+import java.io.Serializable;
 
 /**
  * Created by abbylaura on 02/03/2018.
  */
 
-public class Notice {
+public class Notice implements Serializable{
 
     public static final String TAG = Notice.class.getSimpleName();
     public static final String TABLE = "Notice";

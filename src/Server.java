@@ -9,7 +9,7 @@ public class Server{
         //super();
    	  DatabaseSetup db = new DatabaseSetup();
    	  db.connectToDB();
-   	  //db.deleteTables();
+   	  db.deleteTables();
    	  db.createTables(); //create tables if they dont already exist
    	  db.closeDatabase();
 
