@@ -22,8 +22,11 @@ public class Server{
             serverSocket = new ServerSocket(portNumber);
             while(true) {
                 try {
+               	 System.out.println("before client socket");
                     clientSocket = serverSocket.accept();
+                    System.out.println("new client accepted");
                     new ServerThreads(clientSocket).start();
+                    System.out.println("after new server thread");
 
                 } catch (IOException e) {
                     System.err.println("IO error " + e.getMessage());

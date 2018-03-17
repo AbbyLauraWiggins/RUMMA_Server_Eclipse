@@ -18,6 +18,8 @@ public class ServerThreads extends Thread{
     public ServerThreads(Socket clientSocket){
         super();
         this.clientSocket = clientSocket;
+        String hostName = clientSocket.getInetAddress().getHostName();
+        System.out.println("hostname " + hostName);
     }
 
     public void run(){
@@ -55,6 +57,8 @@ public class ServerThreads extends Thread{
                 e.printStackTrace();
             }
         }
+        
+        
     }
     
     
