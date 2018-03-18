@@ -42,9 +42,12 @@ public class TeamFixturesRepo {
 
     public static String createTable(){
         return "CREATE TABLE IF NOT EXISTS " + TeamFixtures.TABLE  + "("
-                + TeamFixtures.KEY_FixtureId  + "   PRIMARY KEY,"
+                + TeamFixtures.KEY_FixtureId  + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + TeamFixtures.KEY_TeamFixtureDate + " TEXT,"
-                + TeamFixtures.KEY_TeamFixtureLocation + " TEXT)";
+                + TeamFixtures.KEY_TeamFixtureLocation + " TEXT,"
+                + TeamFixtures.KEY_HomeTeam + " TEXT,"
+                + TeamFixtures.KEY_AwayTeam + " TEXT)"
+                ;
     }
 
 
@@ -52,16 +55,22 @@ public class TeamFixturesRepo {
    	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + TeamFixtures.TABLE
    			 + "("
-             + TeamFixtures.KEY_FixtureId  + ","
+             //+ TeamFixtures.KEY_FixtureId  + ","
              + TeamFixtures.KEY_TeamFixtureDate + ","
-             + TeamFixtures.KEY_TeamFixtureLocation + ") "
-	  			  + "VALUES(?,?,?)";
+             + TeamFixtures.KEY_TeamFixtureLocation + ","
+             + TeamFixtures.KEY_HomeTeam + ","
+              + TeamFixtures.KEY_AwayTeam + ") "
+	  			  + "VALUES(?,?,?,?,?)";
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-	  		  	prepStatement.setString(1, teamFixtures.getFixtureId());
-	  		  	prepStatement.setString(2, teamFixtures.getFixtureDate());
-		  		prepStatement.setString(3, teamFixtures.getFixtureLocation());
+	  		  	//prepStatement.setString(1, teamFixtures.getFixtureId());
+	  		  	prepStatement.setString(1, teamFixtures.getFixtureDate());
+		  		prepStatement.setString(2, teamFixtures.getFixtureLocation());
+		  		prepStatement.setString(3, teamFixtures.getHomeTeam());
+		  		prepStatement.setString(4, teamFixtures.getAwayTeam());
+
+
 		  		retVal = prepStatement.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

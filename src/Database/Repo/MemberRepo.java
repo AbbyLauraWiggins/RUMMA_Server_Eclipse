@@ -46,7 +46,7 @@ public class MemberRepo {
 
     public static String createTable() {
         return "CREATE TABLE IF NOT EXISTS " + Member.TABLE + "("
-                + Member.KEY_MemberId + " TEXT PRIMARY KEY,"
+                + Member.KEY_MemberId + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Member.KEY_Name + " TEXT,"
                 + Member.KEY_Email + " TEXT,"
                 + Member.KEY_Password + " TEXT,"
@@ -57,12 +57,11 @@ public class MemberRepo {
                 + Member.KEY_Permissions + " TEXT)";
     }
 
-
     public int insert(Member member) {
    	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + Member.TABLE
    			 + "("
-             + Member.KEY_MemberId + ","
+             //+ Member.KEY_MemberId + ","
              + Member.KEY_Name + ","
              + Member.KEY_Email + ","
              + Member.KEY_Password + ","
@@ -71,19 +70,19 @@ public class MemberRepo {
              + Member.KEY_Responsibilities + ","
              + Member.KEY_TeamId + ","
              + Member.KEY_Permissions + ") "
-	  			  + "VALUES(?,?,?,?,?,?,?,?,?)";
+	  			  + "VALUES(?,?,?,?,?,?,?,?)";
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-	  		  	prepStatement.setString(1, member.getMemberId());
-	  		  	prepStatement.setString(2, member.getName());
-		  		prepStatement.setString(3, member.getEmail());
-		  		prepStatement.setString(4, member.getPassword());
-		  		prepStatement.setString(5, member.getDOB());
-		  		prepStatement.setString(6, member.getPositions());
-		  		prepStatement.setString(7, member.getResponsibilities());
-		  		prepStatement.setString(8, member.getTeamId());
-		  		prepStatement.setString(9, member.getPermissions());
+	  		  	//prepStatement.setString(1, member.getMemberId());
+	  		  	prepStatement.setString(1, member.getName());
+		  		prepStatement.setString(2, member.getEmail());
+		  		prepStatement.setString(3, member.getPassword());
+		  		prepStatement.setString(4, member.getDOB());
+		  		prepStatement.setString(5, member.getPositions());
+		  		prepStatement.setString(6, member.getResponsibilities());
+		  		prepStatement.setString(7, member.getTeamId());
+		  		prepStatement.setString(8, member.getPermissions());
 		  		retVal = prepStatement.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -94,13 +93,12 @@ public class MemberRepo {
        return retVal;
     }
 
-
     public ArrayList<String> getMembers(){
    	 System.out.println("in get members");
   	  
    	 ArrayList<String> members = new ArrayList<>();
    	 
-   	 String selectQuery = "SELECT * FROM MEMBERS";
+   	 String selectQuery = "SELECT * FROM Member";
    	 try {
  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
  			ResultSet rs = prepStatement.executeQuery();
@@ -110,7 +108,7 @@ public class MemberRepo {
  			}else{
  				do{
  					String str = 
- 							rs.getString("MemberId") + "4h4f" +
+ 							String.valueOf(rs.getString("MemberId")) + "4h4f" +
  							rs.getString("Name") + "4h4f" +
  							rs.getString("Email") + "4h4f" +
  							rs.getString("Password") + "4h4f" +
@@ -135,5 +133,30 @@ public class MemberRepo {
     	
     	 
     	 return members;
+    }
+
+    public ArrayList<String> getMemberIDs(){
+   	 String selectQuery = "Select " + Member.KEY_MemberId + " FROM " + Member.TABLE;
+   	 ArrayList<String> memberIDs = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO MEMBERS");
+  	   		memberIDs.add("CODE:4699:NOMEMBERS");
+  			}else{
+  				do{
+  					memberIDs.add(rs.getString("MemberId"));
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return memberIDs;
     }
 }

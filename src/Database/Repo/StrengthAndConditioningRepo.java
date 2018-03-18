@@ -3,8 +3,10 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Member;
 import Database.Schema.StrengthAndConditioning;
 
@@ -42,7 +44,7 @@ public class StrengthAndConditioningRepo {
 
     public static String createTable(){
         return "CREATE TABLE IF NOT EXISTS " + StrengthAndConditioning.TABLE  + "("
-                + StrengthAndConditioning.KEY_SessionId  + "   PRIMARY KEY,"
+                + StrengthAndConditioning.KEY_SessionId  + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + StrengthAndConditioning.KEY_SessionDate + " TEXT,"
                 + StrengthAndConditioning.KEY_SessionTime + " TEXT)";
     }
@@ -52,16 +54,16 @@ public class StrengthAndConditioningRepo {
    	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + StrengthAndConditioning.TABLE
    			 + "("
-             + StrengthAndConditioning.KEY_SessionId  + ","
+             //+ StrengthAndConditioning.KEY_SessionId  + ","
              + StrengthAndConditioning.KEY_SessionDate + ","
              + StrengthAndConditioning.KEY_SessionTime + ") "
-	  			 + "VALUES(?,?,?)";
+	  			 + "VALUES(?,?)";
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-	  		  	prepStatement.setString(1, strengthAndConditioning.getSessionID());
-	  		  	prepStatement.setString(2, strengthAndConditioning.getSessionDate());
-		  		prepStatement.setString(3, strengthAndConditioning.getSessionTime());
+	  		  	//prepStatement.setString(1, strengthAndConditioning.getSessionID());
+	  		  	prepStatement.setString(1, strengthAndConditioning.getSessionDate());
+		  		prepStatement.setString(2, strengthAndConditioning.getSessionTime());
 		  		
 		  		retVal = prepStatement.executeUpdate();
 			} catch (SQLException e) {
@@ -74,9 +76,31 @@ public class StrengthAndConditioningRepo {
     }
 
 
-
-    public void delete( ) {
-        
+    public ArrayList<String> getSessionIDs(){
+   	 String selectQuery = "Select " + StrengthAndConditioning.KEY_SessionId 
+   			 + " FROM " + StrengthAndConditioning.TABLE;
+   	
+   	 ArrayList<String> sessionIDs = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO SESSIONS");
+  	   		sessionIDs.add("CODE:4701:NOSESSIONS");
+  			}else{
+  				do{
+  					sessionIDs.add(rs.getString("SessionId"));
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return sessionIDs;
     }
 
 }

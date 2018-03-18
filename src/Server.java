@@ -11,6 +11,10 @@ public class Server{
    	  db.connectToDB();
    	  db.deleteTables();
    	  db.createTables(); //create tables if they dont already exist
+   	  
+   	  Test tester = new Test();
+   	  tester.insertTestData();
+   	  
    	  db.closeDatabase();
 
         ServerSocket serverSocket = null;

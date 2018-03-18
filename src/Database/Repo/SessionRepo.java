@@ -43,7 +43,7 @@ public class SessionRepo {
 
     public static String createTable(){
         return "CREATE TABLE IF NOT EXISTS " + Session.TABLE + "("
-                //+ Session.KEY_AUTO + " TEXT PRIMARY KEY,"
+                + Session.KEY_AUTO + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Session.KEY_MemberID + " TEXT,"
                 + Session.KEY_SessionID + " TEXT,"
                 + Session.KEY_Deadlifts + " TEXT,"

@@ -35,7 +35,7 @@ public class NoticeRepo {
   		}
   	 }
      
-     public void closeConnection(){  //TODO add in fixtureRepo.closeConnection() where used elsewhere in code
+     public void closeConnection(){  
     	 try {
    			connection.close();
    		} catch (SQLException ex) {

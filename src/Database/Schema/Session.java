@@ -8,7 +8,7 @@ public class Session {
 
     public static final String TAG = Session.class.getSimpleName();
     public static final String TABLE = "Session";
-   // public static final String KEY_AUTO = "Auto";
+    public static final String KEY_AUTO = "Auto";
     public static final String KEY_MemberID = "MemberID";
     public static final String KEY_SessionID = "SessionID";
     public static final String KEY_Deadlifts = "Deadlifts";

@@ -3,6 +3,7 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import Database.Schema.Member;
@@ -32,7 +33,7 @@ public class TeamRepo {
   		}
   	 }
      
-     public void closeConnection(){  //TODO add in fixtureRepo.closeConnection() where used elsewhere in code
+    public void closeConnection(){  //TODO add in fixtureRepo.closeConnection() where used elsewhere in code
     	 try {
    			connection.close();
    		} catch (SQLException ex) {
@@ -42,29 +43,28 @@ public class TeamRepo {
 
     public static String createTable(){
         return "CREATE TABLE IF NOT EXISTS " + Team.TABLE  + "("
-                + Team.KEY_TeamId  + "   PRIMARY KEY,"
+                + Team.KEY_TeamId  + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Team.KEY_TeamName + " TEXT,"
                 + Team.KEY_TeamLocation + " TEXT,"
                 + Team.KEY_TeamCurPoints + " TEXT)";
     }
 
-
     public int insert(Team team) {
    	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + Team.TABLE
    			 + "("
-             + Team.KEY_TeamId  + ","
+             //+ Team.KEY_TeamId  + ","
              + Team.KEY_TeamName + ","
              + Team.KEY_TeamLocation + ","
              + Team.KEY_TeamCurPoints + ") "
-	  			  + "VALUES(?,?,?,?)";
+	  			  + "VALUES(?,?,?)";
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-	  		  	prepStatement.setString(1, team.getTeamId());
-	  		  	prepStatement.setString(2, team.getTeamName());
-		  		prepStatement.setString(3, team.getTeamLocation());
-		  		prepStatement.setString(4, team.getTeamCurPoints());
+	  		  	//prepStatement.setString(1, team.getTeamId());
+	  		  	prepStatement.setString(1, team.getTeamName());
+		  		prepStatement.setString(2, team.getTeamLocation());
+		  		prepStatement.setString(3, team.getTeamCurPoints());
 		  	
 		  		retVal = prepStatement.executeUpdate();
 			} catch (SQLException e) {
@@ -76,10 +76,31 @@ public class TeamRepo {
        return retVal;
     }
 
-
-
-    public void delete( ) {
-        
+    public String getTeamId(String teamName){
+   	 String selectQuery = "SELECT " + Team.KEY_TeamId + " FROM Team "
+   			 + "WHERE " + Team.KEY_TeamName + " = '" + teamName + "'";
+   	 
+   	 String result = "";
+   	 
+   	 try {
+ 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+ 			ResultSet rs = prepStatement.executeQuery();
+ 			if(!rs.next()){
+ 				System.out.println("THERE ARE NO TEAMS");
+ 	   		result = ("CODE:4700:NOTEAMS");
+ 			}else{
+ 				do{
+ 					result = rs.getString("TeamId");
+ 					System.out.println(result);					
+ 				}while(rs.next());
+ 			}			
+    	 } catch (SQLException e) {
+ 			e.printStackTrace();
+    	 }
+   	 
+   	 return result;
     }
+    
+    
 
 }
