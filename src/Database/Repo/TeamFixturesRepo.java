@@ -3,8 +3,10 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Member;
 import Database.Schema.TeamFixtures;
 
@@ -81,7 +83,54 @@ public class TeamFixturesRepo {
        return retVal;
     }
 
-    public void delete( ) {
-        
+    public ArrayList<String> getFixtureIDs(){
+   	 String selectQuery = "Select " + TeamFixtures.KEY_FixtureId + " FROM " + TeamFixtures.TABLE;
+   	 ArrayList<String> fixtureIDs = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO FIXTURES");
+  	   		fixtureIDs.add("CODE:4702:NOFIXTURES");
+  			}else{
+  				do{
+  					fixtureIDs.add(rs.getString("FixtureId"));
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return fixtureIDs;
+    }
+    
+    public ArrayList<String> getMyFixtures(String teamID){
+   	 String selectQuery = "Select " + TeamFixtures.KEY_FixtureId + " FROM " + TeamFixtures.TABLE
+   			 + " WHERE TeamId = '" + teamID + "'";
+   	 ArrayList<String> fixtureIDs = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO FIXTURES");
+  	   		fixtureIDs.add("CODE:4702:NOFIXTURES");
+  			}else{
+  				do{
+  					fixtureIDs.add(rs.getString("FixtureId"));
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return fixtureIDs;
     }
 }

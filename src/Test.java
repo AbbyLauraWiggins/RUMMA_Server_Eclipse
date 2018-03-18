@@ -30,6 +30,7 @@ public class Test {
 		insertSC();
 		insertSession();
 		insertFixtures();
+		insertKPIs();
 	}
 	
 	private void insertMembers(){
@@ -608,10 +609,537 @@ public class Test {
 
 	private void insertFixtures(){
 		FixtureRepo fixtureRepo = new FixtureRepo();
-		Fixture fixture = new Fixture();
+		Fixture fixtures = new Fixture();
+		TeamRepo teamRepo = new TeamRepo();
+		TeamFixturesRepo teamFixturesRepo = new TeamFixturesRepo();
 		
+		String uID = teamRepo.getTeamId("UOBWRFC");
+		String lID = teamRepo.getTeamId("LURFC");
+		String aID = teamRepo.getTeamId("AURFC");
+		String oID = teamRepo.getTeamId("OUWRFC");
+
+		ArrayList<String> fixtureIDs = teamFixturesRepo.getFixtureIDs();
+		
+		fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
+      fixtures.setTeamId("uID");    //Team UOBWRFC
+      fixtures.setFixturePoints("22"); //Points scored by UOBWRFC in fixture 0001
+      fixtures.setForward("0003"); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack("0005");
+      fixtures.setPlayer("0007");
+      fixtures.setTriesScored("4");
+      fixtures.setTriesSucceeded("4");
+      fixtures.setConversions("1");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("4");
+      fixtures.setScrumsLost("2");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("2");
+      fixtures.setLineOutsWon("3");
+      fixtures.setLineOutsLost("4");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
+      fixtures.setTeamId("lID"); //Team LURFC
+      fixtures.setFixturePoints("20"); //Points scored by LURFC in fixture 0001
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("4");
+      fixtures.setTriesSucceeded("4");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("1");
+      fixtures.setScrumsWon("2");
+      fixtures.setScrumsLost("4");
+      fixtures.setMaulsWon("2");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("4");
+      fixtures.setLineOutsLost("3");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(1));
+      fixtures.setTeamId("lID");
+      fixtures.setFixturePoints("12");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("2");
+      fixtures.setTriesSucceeded("7");
+      fixtures.setConversions("1");
+      fixtures.setConversionsSucceeded("1");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("5");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("2");
+      fixtures.setLineOutsLost("2");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(1)); //Fixture 1
+      fixtures.setTeamId("uID");    //Team UOBWRFC
+      fixtures.setFixturePoints("37"); //Points scored by UOBWRFC
+      fixtures.setForward("0001");
+      fixtures.setBack("0009");
+      fixtures.setPlayer("0003");
+      fixtures.setTriesScored("7");
+      fixtures.setTriesSucceeded("2");
+      fixtures.setConversions("1");
+      fixtures.setConversionsSucceeded("1");
+      fixtures.setScrumsWon("5");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("2");
+      fixtures.setLineOutsLost("2");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(2));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints("32");
+      fixtureRepo.insert(fixtures);
+      fixtures.setTriesScored("5");
+      fixtures.setTriesSucceeded("20");
+      fixtures.setConversions("1");
+      fixtures.setConversionsSucceeded("6");
+      fixtures.setScrumsWon("5");
+      fixtures.setScrumsLost("8");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("4");
+      fixtures.setLineOutsLost("4");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(2));
+      fixtures.setTeamId("lID");
+      fixtures.setFixturePoints("112");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("20");
+      fixtures.setTriesSucceeded("5");
+      fixtures.setConversions("6");
+      fixtures.setConversionsSucceeded("1");
+      fixtures.setScrumsWon("8");
+      fixtures.setScrumsLost("5");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("4");
+      fixtures.setLineOutsLost("4");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(3));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints("66");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("12");
+      fixtures.setTriesSucceeded("11");
+      fixtures.setConversions("3");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("3");
+      fixtures.setLineOutsLost("3");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(3));
+      fixtures.setTeamId("uID");
+      fixtures.setFixturePoints("55");
+      fixtures.setForward("0002");
+      fixtures.setBack("0005");
+      fixtures.setPlayer("0006");
+      fixtures.setTriesScored("11");
+      fixtures.setTriesSucceeded("12");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("3");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("3");
+      fixtures.setLineOutsLost("3");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(4));
+      fixtures.setTeamId("uID");
+      fixtures.setFixturePoints("15");
+      fixtures.setForward("0008");
+      fixtures.setBack("0001");
+      fixtures.setPlayer("0003");
+      fixtures.setTriesScored("3");
+      fixtures.setTriesSucceeded("0");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("6");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("2");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("6");
+      fixtures.setLineOutsLost("3");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(4));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints("0");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("0");
+      fixtures.setTriesSucceeded("3");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("6");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("2");
+      fixtures.setLineOutsWon("3");
+      fixtures.setLineOutsLost("6");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(5));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints("10");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("2");
+      fixtures.setTriesSucceeded("2");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("2");
+      fixtures.setMaulsLost("2");
+      fixtures.setLineOutsWon("4");
+      fixtures.setLineOutsLost("4");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(5));
+      fixtures.setTeamId("lID");
+      fixtures.setFixturePoints("10");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("2");
+      fixtures.setTriesSucceeded("2");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("3");
+      fixtures.setScrumsLost("3");
+      fixtures.setMaulsWon("2");
+      fixtures.setMaulsLost("2");
+      fixtures.setLineOutsWon("4");
+      fixtures.setLineOutsLost("4");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(6));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints("7");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored("1");
+      fixtures.setTriesSucceeded("2");
+      fixtures.setConversions("0");
+      fixtures.setConversionsSucceeded("1");
+      fixtures.setScrumsWon("5");
+      fixtures.setScrumsLost("5");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("2");
+      fixtures.setLineOutsLost("2");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(6));
+      fixtures.setTeamId("uID");
+      fixtures.setFixturePoints("12");
+      fixtures.setForward("0002");
+      fixtures.setBack("0009");
+      fixtures.setPlayer("0010");
+      fixtures.setTriesScored("2");
+      fixtures.setTriesSucceeded("1");
+      fixtures.setConversions("1");
+      fixtures.setConversionsSucceeded("0");
+      fixtures.setScrumsWon("5");
+      fixtures.setScrumsLost("5");
+      fixtures.setMaulsWon("1");
+      fixtures.setMaulsLost("1");
+      fixtures.setLineOutsWon("2");
+      fixtures.setLineOutsLost("2");
+      fixtures.setDropGoals("0");
+      fixtures.setPenaltyKicks("0");
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(7));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints("68");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(7));
+      fixtures.setTeamId("lID");
+      fixtures.setFixturePoints("64");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(8));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints("87");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(8));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints("44");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(9));
+      fixtures.setTeamId("lID");
+      fixtures.setFixturePoints("null");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(9));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints("null");
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(10));
+      fixtures.setTeamId("aID");
+      fixtures.setFixturePoints(null); //null as hasn't occured yet
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(10));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints(null);
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(11));
+      fixtures.setTeamId("uID");
+      fixtures.setFixturePoints(null);
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+
+      fixtures.setFixtureId(fixtureIDs.get(11));
+      fixtures.setTeamId("oID");
+      fixtures.setFixturePoints(null);
+      fixtures.setForward(null);
+      fixtures.setBack(null);
+      fixtures.setPlayer(null);
+      fixtures.setTriesScored(null);
+      fixtures.setTriesSucceeded(null);
+      fixtures.setConversions(null);
+      fixtures.setConversionsSucceeded(null);
+      fixtures.setScrumsWon(null);
+      fixtures.setScrumsLost(null);
+      fixtures.setMaulsWon(null);
+      fixtures.setMaulsLost(null);
+      fixtures.setLineOutsWon(null);
+      fixtures.setLineOutsLost(null);
+      fixtures.setDropGoals(null);
+      fixtures.setPenaltyKicks(null);
+      fixtureRepo.insert(fixtures);
+      
+      
 		fixtureRepo.closeConnection();
 		
+	}
+
+	private void insertKPIs(){
+		KPIRepo kpiRepo = new KPIRepo();
+		KPI kpi = new KPI();
+		MemberRepo memberRepo = new MemberRepo();
+		TeamFixturesRepo tfRepo = new TeamFixturesRepo();
+		TeamRepo teamRepo = new TeamRepo();
+		
+		ArrayList<String> myFixturesPlayed = tfRepo.getMyFixtures(teamRepo.getTeamId("UOBWRFC"));
+		ArrayList<String> memberIDs = memberRepo.getMemberIDs();
+
+		Random rand = new Random();
+
+		for(String memberID: memberIDs){
+			for(String fixtureID: myFixturesPlayed){
+				  kpi.setMemberID(memberID);
+		        kpi.setFixtureID(fixtureID);
+		        kpi.setsTackles(String.valueOf(rand.nextInt(0) + 20));
+		        kpi.setuTackles(String.valueOf(rand.nextInt(0) + 15));
+		        kpi.setsCarries(String.valueOf(rand.nextInt(0) + 10));
+		        kpi.setuCarries(String.valueOf(rand.nextInt(0) + 10));
+		        kpi.setsPasses(String.valueOf(rand.nextInt(0) + 25));
+		        kpi.setuPasses(String.valueOf(rand.nextInt(0) + 15));
+		        kpi.setHandlingErrors(String.valueOf(rand.nextInt(0) + 12));
+		        kpi.setPenalties(String.valueOf(rand.nextInt(0) + 3));
+		        kpi.setYellowCards("0");
+		        kpi.setTriesScored(String.valueOf(rand.nextInt(0) + 2));
+		        kpi.setTurnoversWon(String.valueOf(rand.nextInt(0) + 10));
+		        kpi.setsThrowIns("0");
+		        kpi.setuThrowIns("0");
+		        kpi.setsLineOutTakes("0");
+		        kpi.setuLineOutTakes("0");
+		        kpi.setsKicks(String.valueOf(rand.nextInt(0) + 2));
+		        kpi.setuKicks(String.valueOf(rand.nextInt(0) + 2));
+		        kpiRepo.insert(kpi);
+			}
+		}
+		kpiRepo.closeConnection();
 	}
 }
 
