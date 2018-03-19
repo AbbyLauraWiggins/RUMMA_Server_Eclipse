@@ -62,7 +62,7 @@ public class TeamFixturesRepo {
              + TeamFixtures.KEY_TeamFixtureLocation + ","
              + TeamFixtures.KEY_HomeTeam + ","
               + TeamFixtures.KEY_AwayTeam + ") "
-	  			  + "VALUES(?,?,?,?,?)";
+	  			  + "VALUES(?,?,?,?)";
 	  	  
 	  	  try {
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
@@ -110,7 +110,7 @@ public class TeamFixturesRepo {
     
     public ArrayList<String> getMyFixtures(String teamID){
    	 String selectQuery = "Select " + TeamFixtures.KEY_FixtureId + " FROM " + TeamFixtures.TABLE
-   			 + " WHERE TeamId = '" + teamID + "'";
+   			 + " WHERE HomeTeam = '" + teamID + "' OR AwayTeam = '" + teamID + "'";
    	 ArrayList<String> fixtureIDs = new ArrayList<>();
    	 
    	 try {

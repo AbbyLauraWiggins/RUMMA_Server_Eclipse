@@ -47,7 +47,7 @@ public class FixtureRepo {
                 + Fixture.KEY_FixturePrimary + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + Fixture.KEY_TeamId + " TEXT,"  
                 + Fixture.KEY_FixtureId + " TEXT,"
-                + Fixture.KEY_FixturePoints + " TEXT"
+                + Fixture.KEY_FixturePoints + " TEXT,"
                 + Fixture.KEY_Forward + " TEXT,"
                 + Fixture.KEY_Back + " TEXT,"
                 + Fixture.KEY_Player + " TEXT,"
@@ -89,25 +89,26 @@ public class FixtureRepo {
    			  + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
    	  
    	  try {
+   		   connectToDB();
    		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
-   		  	prepStatement.setString(1, fixture.getTeamId());;
-   		  	prepStatement.setString(2, fixture.getFixtureId());;
-   		  	prepStatement.setString(3, fixture.getFixturePoints());;   		  	
-   		  	prepStatement.setString(4, fixture.getForward());;
-   		  	prepStatement.setString(5, fixture.getBack());;
-   		  	prepStatement.setString(6, fixture.getPlayer());;
-   		  	prepStatement.setString(7, fixture.getTriesScored());;
-   		  	prepStatement.setString(8, fixture.getTriesSucceeded());;
-   		  	prepStatement.setString(9, fixture.getConversions());;
-   		  	prepStatement.setString(10, fixture.getConversionsSucceeded());;
-   		  	prepStatement.setString(11, fixture.getScrumsWon());;
-   		  	prepStatement.setString(12, fixture.getScrumsLost());;
-   		  	prepStatement.setString(13, fixture.getLineOutsWon());;
-   		  	prepStatement.setString(14, fixture.getLineOutsLost());;
-   		  	prepStatement.setString(15, fixture.getMaulsWon());;
-   		  	prepStatement.setString(16, fixture.getMaulsLost());;
-   		  	prepStatement.setString(17, fixture.getDropGoals());;
-   		  	prepStatement.setString(18, fixture.getPenaltyKicks());;
+   		  	prepStatement.setString(1, fixture.getTeamId());
+   		  	prepStatement.setString(2, fixture.getFixtureId());
+   		  	prepStatement.setString(3, fixture.getFixturePoints());		  	
+   		  	prepStatement.setString(4, fixture.getForward());
+   		  	prepStatement.setString(5, fixture.getBack());
+   		  	prepStatement.setString(6, fixture.getPlayer());
+   		  	prepStatement.setString(7, fixture.getTriesScored());
+   		  	prepStatement.setString(8, fixture.getTriesSucceeded());
+   		  	prepStatement.setString(9, fixture.getConversions());
+   		  	prepStatement.setString(10, fixture.getConversionsSucceeded());
+   		  	prepStatement.setString(11, fixture.getScrumsWon());
+   		  	prepStatement.setString(12, fixture.getScrumsLost());
+   		  	prepStatement.setString(13, fixture.getLineOutsWon());
+   		  	prepStatement.setString(14, fixture.getLineOutsLost());
+   		  	prepStatement.setString(15, fixture.getMaulsWon());
+   		  	prepStatement.setString(16, fixture.getMaulsLost());
+   		  	prepStatement.setString(17, fixture.getDropGoals());
+   		  	prepStatement.setString(18, fixture.getPenaltyKicks());
 
 
    		  	prepStatement.executeUpdate();

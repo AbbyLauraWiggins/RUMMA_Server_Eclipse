@@ -34,15 +34,18 @@ public class Test {
 	}
 	
 	private void insertMembers(){
-		 MemberRepo memberRepo = new MemberRepo();
 		 Member member = new Member();
 		 
 		 TeamRepo teamRepo = new TeamRepo();		 
 		 
 		 //SIMPLY TEST TEAM ID
 		 //IN PROGRAM, THIS WILL COME FROM A SPINNER SELECTION
+		 teamRepo.connectToDB();
 		 String teamName = teamRepo.getTeamId("UOBWRFC"); 
 		 
+		 
+		 MemberRepo memberRepo = new MemberRepo();
+
        member.setName("Michelle Ezigbo");
        member.setEmail("m.ezigbo@outlook.com");
        member.setPassword("0001");  //for testing, set password to memberID
@@ -148,6 +151,7 @@ public class Test {
 	private void insertTeams(){
 		TeamRepo teamRepo = new TeamRepo();
 		Team team = new Team();
+		teamRepo.connectToDB();
 		
       team.setTeamName("UOBWRFC");
       team.setTeamLocation("B29 2TT");
@@ -190,6 +194,7 @@ public class Test {
       //11: AURFC vs OUWRFC   21/03/2017
       //12: UOBWRFC vs OUWRFC   28/03/2018
 		TeamRepo teamRepo = new TeamRepo();
+		teamRepo.connectToDB();
 		String uID = teamRepo.getTeamId("UOBWRFC");
 		String lID = teamRepo.getTeamId("LURFC");
 		String aID = teamRepo.getTeamId("AURFC");
@@ -613,6 +618,7 @@ public class Test {
 		TeamRepo teamRepo = new TeamRepo();
 		TeamFixturesRepo teamFixturesRepo = new TeamFixturesRepo();
 		
+		teamRepo.connectToDB();
 		String uID = teamRepo.getTeamId("UOBWRFC");
 		String lID = teamRepo.getTeamId("LURFC");
 		String aID = teamRepo.getTeamId("AURFC");
@@ -620,12 +626,14 @@ public class Test {
 
 		ArrayList<String> fixtureIDs = teamFixturesRepo.getFixtureIDs();
 		
+		fixtureRepo.connectToDB();
+		
 		fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
       fixtures.setTeamId("uID");    //Team UOBWRFC
       fixtures.setFixturePoints("22"); //Points scored by UOBWRFC in fixture 0001
-      fixtures.setForward("0003"); //memberID of UOBWRFC player who got forward of the match
-      fixtures.setBack("0005");
-      fixtures.setPlayer("0007");
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("4");
       fixtures.setTriesSucceeded("4");
       fixtures.setConversions("1");
@@ -643,7 +651,7 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
       fixtures.setTeamId("lID"); //Team LURFC
       fixtures.setFixturePoints("20"); //Points scored by LURFC in fixture 0001
-      fixtures.setForward(null);
+      fixtures.setForward(null); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(null);
       fixtures.setPlayer(null);
       fixtures.setTriesScored("4");
@@ -663,7 +671,7 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(1));
       fixtures.setTeamId("lID");
       fixtures.setFixturePoints("12");
-      fixtures.setForward(null);
+      fixtures.setForward(null); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(null);
       fixtures.setPlayer(null);
       fixtures.setTriesScored("2");
@@ -683,9 +691,9 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(1)); //Fixture 1
       fixtures.setTeamId("uID");    //Team UOBWRFC
       fixtures.setFixturePoints("37"); //Points scored by UOBWRFC
-      fixtures.setForward("0001");
-      fixtures.setBack("0009");
-      fixtures.setPlayer("0003");
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("7");
       fixtures.setTriesSucceeded("2");
       fixtures.setConversions("1");
@@ -703,7 +711,9 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(2));
       fixtures.setTeamId("aID");
       fixtures.setFixturePoints("32");
-      fixtureRepo.insert(fixtures);
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("5");
       fixtures.setTriesSucceeded("20");
       fixtures.setConversions("1");
@@ -761,9 +771,9 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(3));
       fixtures.setTeamId("uID");
       fixtures.setFixturePoints("55");
-      fixtures.setForward("0002");
-      fixtures.setBack("0005");
-      fixtures.setPlayer("0006");
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("11");
       fixtures.setTriesSucceeded("12");
       fixtures.setConversions("0");
@@ -781,9 +791,9 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(4));
       fixtures.setTeamId("uID");
       fixtures.setFixturePoints("15");
-      fixtures.setForward("0008");
-      fixtures.setBack("0001");
-      fixtures.setPlayer("0003");
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("3");
       fixtures.setTriesSucceeded("0");
       fixtures.setConversions("0");
@@ -881,9 +891,9 @@ public class Test {
       fixtures.setFixtureId(fixtureIDs.get(6));
       fixtures.setTeamId("uID");
       fixtures.setFixturePoints("12");
-      fixtures.setForward("0002");
-      fixtures.setBack("0009");
-      fixtures.setPlayer("0010");
+      fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
+      fixtures.setBack(getRandomMember());
+      fixtures.setPlayer(getRandomMember());
       fixtures.setTriesScored("2");
       fixtures.setTriesSucceeded("1");
       fixtures.setConversions("1");
@@ -1109,7 +1119,7 @@ public class Test {
 		MemberRepo memberRepo = new MemberRepo();
 		TeamFixturesRepo tfRepo = new TeamFixturesRepo();
 		TeamRepo teamRepo = new TeamRepo();
-		
+
 		ArrayList<String> myFixturesPlayed = tfRepo.getMyFixtures(teamRepo.getTeamId("UOBWRFC"));
 		ArrayList<String> memberIDs = memberRepo.getMemberIDs();
 
@@ -1119,27 +1129,44 @@ public class Test {
 			for(String fixtureID: myFixturesPlayed){
 				  kpi.setMemberID(memberID);
 		        kpi.setFixtureID(fixtureID);
-		        kpi.setsTackles(String.valueOf(rand.nextInt(0) + 20));
-		        kpi.setuTackles(String.valueOf(rand.nextInt(0) + 15));
-		        kpi.setsCarries(String.valueOf(rand.nextInt(0) + 10));
-		        kpi.setuCarries(String.valueOf(rand.nextInt(0) + 10));
-		        kpi.setsPasses(String.valueOf(rand.nextInt(0) + 25));
-		        kpi.setuPasses(String.valueOf(rand.nextInt(0) + 15));
-		        kpi.setHandlingErrors(String.valueOf(rand.nextInt(0) + 12));
-		        kpi.setPenalties(String.valueOf(rand.nextInt(0) + 3));
+		        kpi.setsTackles(String.valueOf((rand.nextInt(1) + 20)-1));
+		        kpi.setuTackles(String.valueOf((rand.nextInt(1) + 15)-1));
+		        kpi.setsCarries(String.valueOf((rand.nextInt(1) + 10)-1));
+		        kpi.setuCarries(String.valueOf((rand.nextInt(1) + 10)-1));
+		        kpi.setsPasses(String.valueOf((rand.nextInt(1) + 25)-1));
+		        kpi.setuPasses(String.valueOf((rand.nextInt(1) + 15)-1));
+		        kpi.setHandlingErrors(String.valueOf((rand.nextInt(1) + 12)-1));
+		        kpi.setPenalties(String.valueOf((rand.nextInt(1) + 3)-1));
 		        kpi.setYellowCards("0");
-		        kpi.setTriesScored(String.valueOf(rand.nextInt(0) + 2));
-		        kpi.setTurnoversWon(String.valueOf(rand.nextInt(0) + 10));
+		        kpi.setTriesScored(String.valueOf((rand.nextInt(1) + 2)-1));
+		        kpi.setTurnoversWon(String.valueOf((rand.nextInt(1) + 10)-1));
 		        kpi.setsThrowIns("0");
 		        kpi.setuThrowIns("0");
 		        kpi.setsLineOutTakes("0");
 		        kpi.setuLineOutTakes("0");
-		        kpi.setsKicks(String.valueOf(rand.nextInt(0) + 2));
-		        kpi.setuKicks(String.valueOf(rand.nextInt(0) + 2));
+		        kpi.setsKicks(String.valueOf((rand.nextInt(1) + 2)-1));
+		        kpi.setuKicks(String.valueOf((rand.nextInt(1) + 2)-1));
 		        kpiRepo.insert(kpi);
 			}
 		}
 		kpiRepo.closeConnection();
+	}
+
+	private String getRandomMember(){
+		MemberRepo memberRepo = new MemberRepo();
+		ArrayList<String> members = memberRepo.getMemberIDs();
+		
+		Random rand = new Random();
+		if(!(members.size() == 0)){
+			System.out.println("members size: " + members.size());
+
+			int i = rand.nextInt(members.size());
+			System.out.println(members.size() + " >>>><<<< " + i);
+			System.out.println(members.get(i));
+			return members.get(i);
+
+		}
+		return null;
 	}
 }
 

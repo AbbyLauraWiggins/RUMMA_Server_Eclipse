@@ -75,6 +75,7 @@ public class TeamRepo {
    	 
        return retVal;
     }
+    
 
     public String getTeamId(String teamName){
    	 String selectQuery = "SELECT " + Team.KEY_TeamId + " FROM Team "
@@ -83,6 +84,7 @@ public class TeamRepo {
    	 String result = "";
    	 
    	 try {
+   		connectToDB();
  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
  			ResultSet rs = prepStatement.executeQuery();
  			if(!rs.next()){
