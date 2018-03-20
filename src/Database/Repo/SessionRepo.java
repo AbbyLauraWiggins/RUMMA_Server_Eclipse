@@ -3,8 +3,10 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Fixture;
 import Database.Schema.Session;
 
@@ -108,5 +110,49 @@ public class SessionRepo {
        return retVal;
     }
 
-   
+    public ArrayList<String> getMySession(String myID){
+   	 ArrayList<String> fixtures = new ArrayList<String>();
+
+   	 String selectQuery = "SELECT * FROM " + Fixture.TABLE; 
+   			 
+   	 try {
+			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+			ResultSet rs = prepStatement.executeQuery();
+			if(!rs.next()){
+				System.out.println("CODE:4701:NOSESSIONS");
+	   		fixtures.add("CODE:4701:NOSESSIONS");
+			}else{
+				do{
+					String str = 
+							String.valueOf(rs.getString("Auto")) + "4h4f"
+					 		+ rs.getString("MemberId") + "4h4f"
+					 		+ rs.getString("SessionId") + "4h4f"
+					 		+ rs.getString("Deadlifts") + "4h4f"
+							+ rs.getString("DeadliftJumps") + "4h4f"
+							+ rs.getString("BackSquat") + "4h4f"
+							+ rs.getString("BackSquatJumps") + "4h4f"
+							+ rs.getString("GobletSquat") + "4h4f"
+							+ rs.getString("BenchPress") + "4h4f"
+							+ rs.getString("MilitaryPress") + "4h4f"
+							+ rs.getString("SupineRow") + "4h4f"
+							+ rs.getString("ChinUps") + "4h4f"
+							+ rs.getString("Trunk") + "4h4f"
+							+ rs.getString("RDL") + "4h4f"		
+							+ rs.getString("SplitSquat") + "4h4f"
+							+ rs.getString("FourWayArms");
+					System.out.println("notice repo: " + str);
+					fixtures.add(str);
+					
+				}while(rs.next());
+			}
+			
+			
+   	 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+   	 }
+   	
+   	 closeConnection();
+   	 return fixtures;
+    }
 }

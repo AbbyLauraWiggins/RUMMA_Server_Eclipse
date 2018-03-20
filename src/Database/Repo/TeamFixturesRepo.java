@@ -109,7 +109,7 @@ public class TeamFixturesRepo {
     }
     
     public ArrayList<String> getMyFixtures(String teamID){
-   	 String selectQuery = "Select " + TeamFixtures.KEY_FixtureId + " FROM " + TeamFixtures.TABLE
+   	 String selectQuery = "SELECT " + TeamFixtures.KEY_FixtureId + " FROM " + TeamFixtures.TABLE
    			 + " WHERE HomeTeam = '" + teamID + "' OR AwayTeam = '" + teamID + "'";
    	 ArrayList<String> fixtureIDs = new ArrayList<>();
    	 
@@ -133,4 +133,45 @@ public class TeamFixturesRepo {
    	 
    	 return fixtureIDs;
     }
+
+    public ArrayList<String> getFixtures(int tableSize){
+   	 String selectQuery = "SELECT * FROM " + TeamFixtures.TABLE;
+   	 
+   	 ArrayList<String> tfList = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO FIXTURES");
+  	   		tfList.add("CODE:4702:NOFIXTURES");
+  			}else{
+  				int counter = 0;
+  				do{
+  					if(counter >= tableSize){
+  						String str = 
+  								String.valueOf(rs.getString("FixtureId")) + "4h4f"
+  								+ rs.getString("TeamFixtureDate") + "4h4f"
+  								+ rs.getString("TeamFixtureLocation") + "4h4f"
+  								+ rs.getString("HomeTeam") + "4h4f"
+  								+ rs.getString("AwayTeam");
+  						
+  						System.out.println("getTeamFixtures: " + str);
+  						tfList.add(str);
+  					}
+  					counter++;	
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return tfList;
+    }
+
+    
+
 }

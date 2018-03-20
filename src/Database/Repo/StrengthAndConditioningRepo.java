@@ -102,5 +102,41 @@ public class StrengthAndConditioningRepo {
    	 
    	 return sessionIDs;
     }
+    
+    public ArrayList<String> getSC(int tableSize){
+   	 String selectQuery = "Select * FROM " + StrengthAndConditioning.TABLE;
+   	
+   	 ArrayList<String> sc = new ArrayList<>();
+   	 
+   	 try {
+  			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+  			ResultSet rs = prepStatement.executeQuery();
+  			if(!rs.next()){
+  				System.out.println("THERE ARE NO SESSIONS");
+  	   		sc.add("CODE:4701:NOSESSIONS");
+  			}else{
+  				int counter = 0;
+  				do{
+  					if(counter >= tableSize){
+  	  					String str = 
+  	  							String.valueOf(rs.getString("SessionId")) + "4h4f" 
+  	  							+ rs.getString("SessionDate") + "4h4f"
+  	  							+ rs.getString("SessionTime");
+  	  					
+  	  					System.out.println("getSC: " + str);
+  	  					
+  	  					sc.add(str);
+   				}
+  				}while(rs.next());
+  			}
+  			
+  			
+     	 } catch (SQLException e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+     	 }
+   	 
+   	 return sc;
+    }
 
 }

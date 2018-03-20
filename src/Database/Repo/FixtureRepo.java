@@ -3,9 +3,12 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Fixture;
+import Database.Schema.Notice;
 
 /**
  * Created by abbylaura on 02/03/2018.
@@ -117,6 +120,61 @@ public class FixtureRepo {
 			e.printStackTrace();
 		}
    	 
+    }
+    
+    
+    
+    public ArrayList<String> getFixtures(int tableSize){
+   	 ArrayList<String> fixtures = new ArrayList<String>();
+
+   	 String selectQuery = "SELECT * FROM " + Fixture.TABLE; 
+   			 
+   	 try {
+			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+			ResultSet rs = prepStatement.executeQuery();
+			if(!rs.next()){
+				System.out.println("CODE:4702:NONOTICES");
+	   		fixtures.add("CODE:4702:NONOTICES");
+			}else{
+				int counter = 0;
+				do{
+					if(counter >= tableSize){
+						String str = String.valueOf(rs.getString("FixturePrimary")) + "4h4f" +
+								rs.getString("TeamId") + "4h4f" +
+								rs.getString("FixtureId") + "4h4f" +
+								rs.getString("FixturePoints") + "4h4f" +
+								rs.getString("Forward") + "4h4f" +
+								rs.getString("Back") + "4h4f" +
+								rs.getString("Player") + "4h4f" +
+								rs.getString("TriesScored") + "4h4f" +
+								rs.getString("TriesSucceeded") + "4h4f" +
+								rs.getString("Conversions") + "4h4f" +
+								rs.getString("ConversionsSucceeded") + "4h4f" +
+								rs.getString("ScrumsWon") + "4h4f" +
+								rs.getString("ScrumsLost") + "4h4f" +
+								rs.getString("MaulsWon") + "4h4f" +
+								rs.getString("MaulsLost") + "4h4f" +
+								rs.getString("LineOutsWon") + "4h4f" +
+								rs.getString("LineOutsLost") + "4h4f" +
+								rs.getString("DropGoals") + "4h4f" +
+								rs.getString("PenaltyKicks") + "4h4f";
+								
+						
+						System.out.println("notice repo: " + str);
+						fixtures.add(str);
+					}
+					counter++;
+				}while(rs.next());
+			}
+			
+			
+   	 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+   	 }
+   	
+   	 closeConnection();
+   	 return fixtures;
     }
 
 

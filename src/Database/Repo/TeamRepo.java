@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Member;
 import Database.Schema.Team;
 
@@ -94,6 +95,41 @@ public class TeamRepo {
  				do{
  					result = rs.getString("TeamId");
  					System.out.println(result);					
+ 				}while(rs.next());
+ 			}			
+    	 } catch (SQLException e) {
+ 			e.printStackTrace();
+    	 }
+   	 
+   	 return result;
+    }
+    
+    public ArrayList<String> getTeams(int tableSize){
+   	 String selectQuery = "SELECT * FROM Team";
+   	 
+   	 ArrayList<String> result = new ArrayList<>();
+   	 
+   	 try {
+   		connectToDB();
+ 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+ 			ResultSet rs = prepStatement.executeQuery();
+ 			if(!rs.next()){
+ 				System.out.println("THERE ARE NO TEAMS");
+ 	   		result.add("CODE:4700:NOTEAMS");
+ 			}else{
+ 				int counter = 0;
+ 				do{
+ 					if(counter >= tableSize){
+ 						String str = 
+ 								String.valueOf(rs.getString("TeamId")) + "4h4f" 
+ 								+ rs.getString("TeamName") + "4h4f"
+ 								+ rs.getString("TeamLocation") + "4h4f"
+ 								+ rs.getString("TeamCurPoints");
+ 						
+ 						System.out.println("getTeams: " + str);
+ 						
+ 						result.add(str);
+ 					}
  				}while(rs.next());
  			}			
     	 } catch (SQLException e) {
