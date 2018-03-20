@@ -3,10 +3,13 @@ package Database.Repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import Database.Schema.Fixture;
 import Database.Schema.KPI;
+import Database.Schema.Session;
 
 /**
  * Created by abbylaura on 06/03/2018.
@@ -115,10 +118,110 @@ public class KPIRepo {
 				e.printStackTrace();
 			}
     }
+    
+    public ArrayList<String> getMyKPIs(String myID){
+   	 ArrayList<String> kpis = new ArrayList<String>();
 
-    public void delete() {
-      
+   	 String selectQuery = "SELECT * FROM " + KPI.TABLE
+   			 + " WHERE MemberId = '" + myID + "'"; 
+   			 
+   	 try {
+			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+			ResultSet rs = prepStatement.executeQuery();
+			if(!rs.next()){
+				System.out.println("CODE:4809:NOKPIS");
+	   		kpis.add("CODE:4809:NOKPIS");
+			}else{
+				do{
+					String str = 
+							String.valueOf(rs.getString("KPIPrimary")) + "4h4f"
+					 		+ rs.getString("MemberId") + "4h4f"
+					 		+ rs.getString("FixtureId") + "4h4f"
+					 		+ rs.getString("sTackles") + "4h4f"
+							+ rs.getString("uTackles") + "4h4f"
+							+ rs.getString("sCarries") + "4h4f"
+							+ rs.getString("uCarries") + "4h4f"
+							+ rs.getString("sPasses") + "4h4f"
+							+ rs.getString("uPasses") + "4h4f"
+							+ rs.getString("HandlingErros") + "4h4f"
+							+ rs.getString("Penalties") + "4h4f"
+							+ rs.getString("YellowCards") + "4h4f"
+							+ rs.getString("TriesScored") + "4h4f"
+							+ rs.getString("TurnoversWon") + "4h4f"		
+							+ rs.getString("sThrowIns") + "4h4f"
+							+ rs.getString("uThrowIns") + "4h4f"
+							+ rs.getString("sLineOutTakes") + "4h4f"
+							+ rs.getString("uLineOutTakes") + "4h4f"
+							+ rs.getString("sKicks") + "4h4f"
+							+ rs.getString("uKicks") + "4h4f";
+					System.out.println("kpi repo: " + str);
+					kpis.add(str);
+					
+				}while(rs.next());
+			}
+			
+			
+   	 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+   	 }
+   	
+   	 closeConnection();
+   	 return kpis;
     }
 
+    public ArrayList<String> getAllKPIs(int tableSize){
+   	 ArrayList<String> kpis = new ArrayList<String>();
+
+   	 String selectQuery = "SELECT * FROM " + KPI.TABLE; 
+   			 
+   	 try {
+			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+			ResultSet rs = prepStatement.executeQuery();
+			if(!rs.next()){
+				System.out.println("CODE:4809:NOKPIS");
+	   		kpis.add("CODE:4809:NOKPIS");
+			}else{
+				int counter = 0;
+				do{
+					if(counter >= tableSize){
+						String str = 
+								String.valueOf(rs.getString("KPIPrimary")) + "4h4f"
+						 		+ rs.getString("MemberId") + "4h4f"
+						 		+ rs.getString("FixtureId") + "4h4f"
+						 		+ rs.getString("sTackles") + "4h4f"
+								+ rs.getString("uTackles") + "4h4f"
+								+ rs.getString("sCarries") + "4h4f"
+								+ rs.getString("uCarries") + "4h4f"
+								+ rs.getString("sPasses") + "4h4f"
+								+ rs.getString("uPasses") + "4h4f"
+								+ rs.getString("HandlingErros") + "4h4f"
+								+ rs.getString("Penalties") + "4h4f"
+								+ rs.getString("YellowCards") + "4h4f"
+								+ rs.getString("TriesScored") + "4h4f"
+								+ rs.getString("TurnoversWon") + "4h4f"		
+								+ rs.getString("sThrowIns") + "4h4f"
+								+ rs.getString("uThrowIns") + "4h4f"
+								+ rs.getString("sLineOutTakes") + "4h4f"
+								+ rs.getString("uLineOutTakes") + "4h4f"
+								+ rs.getString("sKicks") + "4h4f"
+								+ rs.getString("uKicks") + "4h4f";
+						System.out.println("kpi repo: " + str);
+						kpis.add(str);
+					}
+					counter ++;
+					
+				}while(rs.next());
+			}
+			
+			
+   	 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+   	 }
+   	
+   	 closeConnection();
+   	 return kpis;
+    }
 
 }

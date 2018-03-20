@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import Database.Repo.FixtureRepo;
+import Database.Repo.KPIRepo;
 import Database.Repo.MemberRepo;
 import Database.Repo.NoticeRepo;
 import Database.Repo.SessionRepo;
@@ -11,7 +12,9 @@ import Database.Repo.StrengthAndConditioningRepo;
 import Database.Repo.TeamFixturesRepo;
 import Database.Repo.TeamRepo;
 import Database.Schema.Fixture;
+import Database.Schema.KPI;
 import Database.Schema.Notice;
+import Database.Schema.Session;
 import Database.Schema.StrengthAndConditioning;
 import Database.Schema.Team;
 import Database.Schema.TeamFixtures;
@@ -76,7 +79,7 @@ public class ServerThreads extends Thread{
 		         	outToClient.writeObject(outList);
 	         }else if(type.equals("SESSION")){
 	         		System.out.println("TYPE = SESSION");
-	         		ArrayList<String> outList
+	         		ArrayList<String> outList = new ArrayList<>();
 	         		if(Integer.parseInt(in.get(1)) < 2){
 			         	outList = serviceBasicSession(in);
 	         		}else{
@@ -84,7 +87,17 @@ public class ServerThreads extends Thread{
 	         		}
 	         		System.out.println("outList: " + outList);
 		         	outToClient.writeObject(outList);
-	         }
+	         }else if(type.equals("KPI")){
+	         		System.out.println("TYPE = KPI");
+	         		ArrayList<String> outList = new ArrayList<>();
+	         		if(Integer.parseInt(in.get(1)) < 2){
+			         	outList = serviceBasicKPI(in);
+	         		}else{
+			         	outList = serviceAdvancedKPI(in, tableSize);
+	         		}
+	         		System.out.println("outList: " + outList);
+		         	outToClient.writeObject(outList);
+         }
 	            
             clientSocket.close();
             return;
@@ -267,7 +280,6 @@ public class ServerThreads extends Thread{
 
 	}
 	
-	
 	private ArrayList<String> serviceBasicSession(ArrayList<String> in){
 		System.out.println("Service basic session" + in.toString());
 		SessionRepo sessionRepo = new SessionRepo();
@@ -278,4 +290,87 @@ public class ServerThreads extends Thread{
 
 	}
 
+	private ArrayList<String> serviceAdvancedSession(ArrayList<String> in, int tableSize){
+		System.out.println("Service adv session" + in.toString());
+		SessionRepo sessionRepo = new SessionRepo();
+		 
+  	 //add to Notices:
+		 for(String al: in){
+			 System.out.println(al);
+			 
+			 if(!(al.equals("CODE:4807:UPDATESESSION"))){ 
+
+				 String[] splitter = al.split("4h4f");
+				 Session scs = new Session();
+             scs.setMemberID(splitter[1]);
+             scs.setDeadlifts(splitter[1]);
+             scs.setDeadliftJumps(splitter[3]);
+             scs.setBackSquat(splitter[4]);
+             scs.setBackSquatJumps(splitter[5]);
+             scs.setGobletSquat(splitter[6]);
+             scs.setBenchPress(splitter[7]);
+             scs.setMilitaryPress(splitter[8]);
+             scs.setSupineRow(splitter[9]);
+             scs.setChinUps(splitter[10]);
+             scs.setTrunk(splitter[11]);
+             scs.setRdl(splitter[12]);
+             scs.setSplitSquat(splitter[13]);
+             scs.setFourWayArms(splitter[14]);
+            
+             sessionRepo.insert(scs);
+			 }
+			 
+			 			 
+		 }
+		 return sessionRepo.getAllSessions(tableSize); 
+	}
+
+	private ArrayList<String> serviceBasicKPI(ArrayList<String> in){
+		System.out.println("Service basic session" + in.toString());
+		KPIRepo kpiRepo = new KPIRepo();
+		
+		String myID = in.get(2);
+		
+		return kpiRepo.getMyKPIs(myID);
+
+	}
+	
+	private ArrayList<String> serviceAdvancedKPI(ArrayList<String> in, int tableSize){
+		System.out.println("Service adv session" + in.toString());
+		KPIRepo kpiRepo = new KPIRepo();
+		 
+  	 //add to Notices:
+		 for(String al: in){
+			 System.out.println(al);
+			 
+			 if(!(al.equals("CODE:4808:UPDATEKPI"))){ 
+
+				 String[] splitter = al.split("4h4f");
+             KPI kpi = new KPI();
+             kpi.setMemberID(splitter[1]);
+             kpi.setFixtureID(splitter[2]);
+             kpi.setsTackles(splitter[3]);
+             kpi.setuTackles(splitter[4]);
+             kpi.setsCarries(splitter[5]);
+             kpi.setuCarries(splitter[6]);
+             kpi.setsPasses(splitter[7]);
+             kpi.setuPasses(splitter[8]);
+             kpi.setHandlingErrors(splitter[9]);
+             kpi.setPenalties(splitter[10]);
+             kpi.setYellowCards(splitter[11]);
+             kpi.setTriesScored(splitter[12]);
+             kpi.setTurnoversWon(splitter[13]);
+             kpi.setsThrowIns(splitter[14]);
+             kpi.setuThrowIns(splitter[15]);
+             kpi.setsLineOutTakes(splitter[16]);
+             kpi.setuLineOutTakes(splitter[17]);
+             kpi.setsKicks(splitter[18]);
+             kpi.setuKicks(splitter[19]);
+             kpiRepo.insert(kpi);
+			 }
+			 
+			 			 
+		 }
+		 return kpiRepo.getAllKPIs(tableSize); 
+	}
 }
