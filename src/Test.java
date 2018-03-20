@@ -629,7 +629,7 @@ public class Test {
 		fixtureRepo.connectToDB();
 		
 		fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
-      fixtures.setTeamId("uID");    //Team UOBWRFC
+      fixtures.setTeamId(uID);    //Team UOBWRFC
       fixtures.setFixturePoints("22"); //Points scored by UOBWRFC in fixture 0001
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -649,7 +649,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(0)); //Fixture 1
-      fixtures.setTeamId("lID"); //Team LURFC
+      fixtures.setTeamId(lID); //Team LURFC
       fixtures.setFixturePoints("20"); //Points scored by LURFC in fixture 0001
       fixtures.setForward(null); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(null);
@@ -669,7 +669,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(1));
-      fixtures.setTeamId("lID");
+      fixtures.setTeamId(lID);
       fixtures.setFixturePoints("12");
       fixtures.setForward(null); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(null);
@@ -689,7 +689,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(1)); //Fixture 1
-      fixtures.setTeamId("uID");    //Team UOBWRFC
+      fixtures.setTeamId(uID);    //Team UOBWRFC
       fixtures.setFixturePoints("37"); //Points scored by UOBWRFC
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -709,7 +709,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(2));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints("32");
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -729,7 +729,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(2));
-      fixtures.setTeamId("lID");
+      fixtures.setTeamId(lID);
       fixtures.setFixturePoints("112");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -749,7 +749,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(3));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints("66");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -769,7 +769,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(3));
-      fixtures.setTeamId("uID");
+      fixtures.setTeamId(uID);
       fixtures.setFixturePoints("55");
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -789,7 +789,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(4));
-      fixtures.setTeamId("uID");
+      fixtures.setTeamId(uID);
       fixtures.setFixturePoints("15");
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -809,7 +809,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(4));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints("0");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -829,7 +829,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(5));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints("10");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -849,7 +849,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(5));
-      fixtures.setTeamId("lID");
+      fixtures.setTeamId(lID);
       fixtures.setFixturePoints("10");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -869,7 +869,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(6));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints("7");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -889,7 +889,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(6));
-      fixtures.setTeamId("uID");
+      fixtures.setTeamId(uID);
       fixtures.setFixturePoints("12");
       fixtures.setForward(getRandomMember()); //memberID of UOBWRFC player who got forward of the match
       fixtures.setBack(getRandomMember());
@@ -909,7 +909,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(7));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints("68");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -929,7 +929,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(7));
-      fixtures.setTeamId("lID");
+      fixtures.setTeamId(lID);
       fixtures.setFixturePoints("64");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -949,7 +949,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(8));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints("87");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -969,7 +969,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(8));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints("44");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -989,7 +989,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(9));
-      fixtures.setTeamId("lID");
+      fixtures.setTeamId(lID);
       fixtures.setFixturePoints("null");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -1009,7 +1009,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(9));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints("null");
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -1029,7 +1029,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(10));
-      fixtures.setTeamId("aID");
+      fixtures.setTeamId(aID);
       fixtures.setFixturePoints(null); //null as hasn't occured yet
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -1049,7 +1049,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(10));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints(null);
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -1069,7 +1069,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(11));
-      fixtures.setTeamId("uID");
+      fixtures.setTeamId(uID);
       fixtures.setFixturePoints(null);
       fixtures.setForward(null);
       fixtures.setBack(null);
@@ -1089,7 +1089,7 @@ public class Test {
       fixtureRepo.insert(fixtures);
 
       fixtures.setFixtureId(fixtureIDs.get(11));
-      fixtures.setTeamId("oID");
+      fixtures.setTeamId(oID);
       fixtures.setFixturePoints(null);
       fixtures.setForward(null);
       fixtures.setBack(null);

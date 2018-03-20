@@ -298,7 +298,7 @@ public class ServerThreads extends Thread{
 		 for(String al: in){
 			 System.out.println(al);
 			 
-			 if(!(al.equals("CODE:4807:UPDATESESSION"))){ 
+			 if(!(al.equals("CODE:4805:UPDATESESSION"))){ 
 
 				 String[] splitter = al.split("4h4f");
 				 Session scs = new Session();
