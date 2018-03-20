@@ -1129,23 +1129,23 @@ public class Test {
 			for(String fixtureID: myFixturesPlayed){
 				  kpi.setMemberID(memberID);
 		        kpi.setFixtureID(fixtureID);
-		        kpi.setsTackles(String.valueOf((rand.nextInt(1) + 20)-1));
-		        kpi.setuTackles(String.valueOf((rand.nextInt(1) + 15)-1));
-		        kpi.setsCarries(String.valueOf((rand.nextInt(1) + 10)-1));
-		        kpi.setuCarries(String.valueOf((rand.nextInt(1) + 10)-1));
-		        kpi.setsPasses(String.valueOf((rand.nextInt(1) + 25)-1));
-		        kpi.setuPasses(String.valueOf((rand.nextInt(1) + 15)-1));
-		        kpi.setHandlingErrors(String.valueOf((rand.nextInt(1) + 12)-1));
-		        kpi.setPenalties(String.valueOf((rand.nextInt(1) + 3)-1));
+		        kpi.setsTackles(String.valueOf((int) (Math.random() * 20)));
+		        kpi.setuTackles(String.valueOf((int) (Math.random() * 15)));
+		        kpi.setsCarries(String.valueOf((int) (Math.random() * 10)));
+		        kpi.setuCarries(String.valueOf((int) (Math.random() * 10)));
+		        kpi.setsPasses(String.valueOf((int) (Math.random() * 25)));
+		        kpi.setuPasses(String.valueOf((int) (Math.random() * 15)));
+		        kpi.setHandlingErrors(String.valueOf((int) (Math.random() * 10)));
+		        kpi.setPenalties(String.valueOf((int) (Math.random() * 3)));
 		        kpi.setYellowCards("0");
-		        kpi.setTriesScored(String.valueOf((rand.nextInt(1) + 2)-1));
-		        kpi.setTurnoversWon(String.valueOf((rand.nextInt(1) + 10)-1));
+		        kpi.setTriesScored(String.valueOf((int) (Math.random() * 2)));
+		        kpi.setTurnoversWon(String.valueOf((int) (Math.random() * 10)));
 		        kpi.setsThrowIns("0");
 		        kpi.setuThrowIns("0");
 		        kpi.setsLineOutTakes("0");
 		        kpi.setuLineOutTakes("0");
-		        kpi.setsKicks(String.valueOf((rand.nextInt(1) + 2)-1));
-		        kpi.setuKicks(String.valueOf((rand.nextInt(1) + 2)-1));
+		        kpi.setsKicks(String.valueOf((int) (Math.random() * 2)));
+		        kpi.setuKicks(String.valueOf((int) (Math.random() * 2)));
 		        kpiRepo.insert(kpi);
 			}
 		}

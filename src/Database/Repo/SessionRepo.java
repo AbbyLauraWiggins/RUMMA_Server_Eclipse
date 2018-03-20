@@ -189,7 +189,7 @@ public class SessionRepo {
 								+ rs.getString("RDL") + "4h4f"		
 								+ rs.getString("SplitSquat") + "4h4f"
 								+ rs.getString("FourWayArms");
-						System.out.println("notice repo: " + str);
+						//System.out.println("session repo: " + str);
 						session.add(str);
 					}
 					counter ++;

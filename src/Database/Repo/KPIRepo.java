@@ -195,7 +195,7 @@ public class KPIRepo {
 								+ rs.getString("uCarries") + "4h4f"
 								+ rs.getString("sPasses") + "4h4f"
 								+ rs.getString("uPasses") + "4h4f"
-								+ rs.getString("HandlingErros") + "4h4f"
+								+ rs.getString("HandlingErrors") + "4h4f"
 								+ rs.getString("Penalties") + "4h4f"
 								+ rs.getString("YellowCards") + "4h4f"
 								+ rs.getString("TriesScored") + "4h4f"
@@ -206,7 +206,7 @@ public class KPIRepo {
 								+ rs.getString("uLineOutTakes") + "4h4f"
 								+ rs.getString("sKicks") + "4h4f"
 								+ rs.getString("uKicks") + "4h4f";
-						System.out.println("kpi repo: " + str);
+						//System.out.println("kpi repo: " + str);
 						kpis.add(str);
 					}
 					counter ++;

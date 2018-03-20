@@ -85,7 +85,7 @@ public class ServerThreads extends Thread{
 	         		}else{
 			         	outList = serviceAdvancedSession(in, tableSize);
 	         		}
-	         		System.out.println("outList: " + outList);
+	         		//System.out.println("outList: " + outList);
 		         	outToClient.writeObject(outList);
 	         }else if(type.equals("KPI")){
 	         		System.out.println("TYPE = KPI");
@@ -95,7 +95,7 @@ public class ServerThreads extends Thread{
 	         		}else{
 			         	outList = serviceAdvancedKPI(in, tableSize);
 	         		}
-	         		System.out.println("outList: " + outList);
+	         		//System.out.println("outList: " + outList);
 		         	outToClient.writeObject(outList);
          }
 	            
@@ -295,11 +295,11 @@ public class ServerThreads extends Thread{
 		SessionRepo sessionRepo = new SessionRepo();
 		 
   	 //add to Notices:
-		 for(String al: in){
-			 System.out.println(al);
-			 
-			 if(!(al.equals("CODE:4805:UPDATESESSION"))){ 
-
+		 
+		System.out.println(in.get(0));
+		 if(!(in.get(0).equals("CODE:4805:UPDATESESSION"))){ 
+			 for(String al: in){
+				 System.out.println(al);
 				 String[] splitter = al.split("4h4f");
 				 Session scs = new Session();
              scs.setMemberID(splitter[1]);
@@ -318,9 +318,7 @@ public class ServerThreads extends Thread{
              scs.setFourWayArms(splitter[14]);
             
              sessionRepo.insert(scs);
-			 }
-			 
-			 			 
+			 } 		 
 		 }
 		 return sessionRepo.getAllSessions(tableSize); 
 	}
@@ -340,10 +338,9 @@ public class ServerThreads extends Thread{
 		KPIRepo kpiRepo = new KPIRepo();
 		 
   	 //add to Notices:
-		 for(String al: in){
-			 System.out.println(al);
-			 
-			 if(!(al.equals("CODE:4808:UPDATEKPI"))){ 
+		if(!(in.get(0).equals("CODE:4808:UPDATEKPI"))){ 
+			for(String al: in){
+				 System.out.println(al);
 
 				 String[] splitter = al.split("4h4f");
              KPI kpi = new KPI();
