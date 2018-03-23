@@ -143,7 +143,7 @@ public class KPIRepo {
 							+ rs.getString("uCarries") + "4h4f"
 							+ rs.getString("sPasses") + "4h4f"
 							+ rs.getString("uPasses") + "4h4f"
-							+ rs.getString("HandlingErros") + "4h4f"
+							+ rs.getString("HandlingErrors") + "4h4f"
 							+ rs.getString("Penalties") + "4h4f"
 							+ rs.getString("YellowCards") + "4h4f"
 							+ rs.getString("TriesScored") + "4h4f"

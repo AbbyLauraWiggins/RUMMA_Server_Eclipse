@@ -83,7 +83,7 @@ public class Test {
        member.setPositions("1");
        member.setResponsibilities("Development Officer");
        member.setTeamId(teamName);
-       member.setPermissions("LEADER");
+       member.setPermissions("PAL");
        memberRepo.insert(member);
 
        member.setName("Jessica Ball");
@@ -143,7 +143,7 @@ public class Test {
        member.setPositions("6, 7");
        member.setResponsibilities("Club Captain");
        member.setTeamId(teamName);
-       member.setPermissions("ADMIN");
+       member.setPermissions("CAL");
        memberRepo.insert(member);
        memberRepo.closeConnection();
 	}

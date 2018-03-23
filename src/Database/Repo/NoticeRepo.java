@@ -85,6 +85,7 @@ public class NoticeRepo {
    	 String getLast = "SELECT * FROM " + Notice.TABLE; 
    			 
    	 try {
+   		connectToDB();
 			PreparedStatement prepStatement = connection.prepareStatement(getLast);
 			ResultSet rs = prepStatement.executeQuery();
 			if(!rs.next()){
@@ -108,6 +109,7 @@ public class NoticeRepo {
 			e.printStackTrace();
    	 }
    	
+   	 closeConnection();
    	 
    	 return notices;
     }

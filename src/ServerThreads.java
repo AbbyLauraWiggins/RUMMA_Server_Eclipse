@@ -97,7 +97,12 @@ public class ServerThreads extends Thread{
 	         		}
 	         		//System.out.println("outList: " + outList);
 		         	outToClient.writeObject(outList);
-         }
+	         }else if(type.equals("SCADD")){
+	         		System.out.println("TYPE = SCADD");
+	         		ArrayList<String> outList = serviceSCADD(in);
+	         		System.out.println("outlist: " + outList);
+	         		outToClient.writeObject(outList);
+	         }
 	            
             clientSocket.close();
             return;
@@ -118,6 +123,79 @@ public class ServerThreads extends Thread{
         
         
     }  
+    
+    private ArrayList<String> serviceSCADD(ArrayList<String> in){
+   	  
+   	  StrengthAndConditioningRepo scRepo = new StrengthAndConditioningRepo();
+   	  StrengthAndConditioning sc = new StrengthAndConditioning();
+   	  
+   	  sc.setSessionDate(in.get(0));
+   	  sc.setSessionTime(in.get(1));
+   	  scRepo.insert(sc);
+   	  
+   	  int sessionID = scRepo.getLastID();
+   	  
+   	  Session scs = new Session();
+
+   	  scs.setMemberID(null);
+   	  scs.setSessionID(String.valueOf(sessionID));
+   	  
+        for(int i = 2; i < in.size(); i++){
+      	  String[] splitter = in.get(i).split("4h4f");
+      	  if(splitter[0].equals("Deadlifts")){
+      		  scs.setDeadlifts(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("DeadliftJumps")){
+      		  scs.setDeadliftJumps(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("BackSquat")){
+      		  scs.setBackSquat(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("BackSquatJumps")){
+      		  scs.setBackSquatJumps(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("GobletSquat")){
+      		  scs.setGobletSquat(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("BenchPress")){
+      		  scs.setBenchPress(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("MilitaryPress")){
+      		  scs.setMilitaryPress(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("SupineRow")){
+      		  scs.setSupineRow(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("ChinUps")){
+      		  scs.setBackSquat(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("RDL")){
+      		  scs.setRdl(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("SplitSquat")){
+      		  scs.setSplitSquat(splitter[1]);
+      	  }
+      	  else if(splitter[0].equals("FourWayArms")){
+      		  scs.setFourWayArms(splitter[1]);
+      	  }
+      	  
+        }
+        
+        ArrayList<String> scSess = scRepo.getSC(0); 
+        
+        SessionRepo sessionRepo = new SessionRepo();
+        sessionRepo.insert(scs);
+        
+        ArrayList<String> sessions = sessionRepo.getAllSessions(0); 
+        
+        scSess.add("session");
+        ArrayList<String> toReturn = new ArrayList<>();
+        toReturn.addAll(scSess);
+        toReturn.addAll(sessions);
+       
+        return toReturn;
+        
+    }
    
    private ArrayList<String> serviceTeamFixtures(ArrayList<String> in, int tableSize){
    	 System.out.println("Service team fixtures" + in.toString());
@@ -168,7 +246,6 @@ public class ServerThreads extends Thread{
 	          
 	                   
 	          noticeRepo.insert(notice);
-	          noticeRepo.closeConnection();
 			 }
 			 
       }

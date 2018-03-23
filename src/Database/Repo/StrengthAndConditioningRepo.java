@@ -138,5 +138,29 @@ public class StrengthAndConditioningRepo {
    	 
    	 return sc;
     }
+    
+    public int getLastID(){
+   	 String selectQuery = "SELECT MAX(SessionId) FROM " + StrengthAndConditioning.TABLE;
+   	 int sessID = 0;
+   	 try {
+   			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+   			ResultSet rs = prepStatement.executeQuery();
+   			if(!rs.next()){
+   				System.out.println("THERE ARE NO SESSIONS");
+   			}else{
+   				do{
+   					  sessID = rs.getInt("SessionId");
+   					  System.out.println(sessID);
+   				}while(rs.next());
+   			}
+   			
+   			
+      	 } catch (SQLException e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+      	 }
+    	 
+    	 return sessID;
+    }
 
 }
