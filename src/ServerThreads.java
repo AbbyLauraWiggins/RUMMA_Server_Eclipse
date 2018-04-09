@@ -3,6 +3,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import Database.Repo.FeedbackRepo;
 import Database.Repo.FixtureRepo;
 import Database.Repo.KPIRepo;
 import Database.Repo.MemberRepo;
@@ -11,6 +12,7 @@ import Database.Repo.SessionRepo;
 import Database.Repo.StrengthAndConditioningRepo;
 import Database.Repo.TeamFixturesRepo;
 import Database.Repo.TeamRepo;
+import Database.Schema.Feedback;
 import Database.Schema.Fixture;
 import Database.Schema.KPI;
 import Database.Schema.Notice;
@@ -19,17 +21,35 @@ import Database.Schema.StrengthAndConditioning;
 import Database.Schema.Team;
 import Database.Schema.TeamFixtures;
 
+/**
+ * @author abbylaura
+ */
 public class ServerThreads extends Thread{
-
+	 
     private Socket clientSocket;
 
-    public ServerThreads(Socket clientSocket){
+    /**
+    * @param clientSocket
+    */
+   public ServerThreads(Socket clientSocket){
         super();
         this.clientSocket = clientSocket;
         String hostName = clientSocket.getInetAddress().getHostName();
         System.out.println("hostname " + hostName);
     }
 
+    /*
+     * (non-Javadoc)
+     * Reads in type, tableSize and in from server
+     * String type: type of request to be serviced (indicates which method to call)
+     * int tableSize: size of client-version table that is to be updated, so don't send data they already have
+     * ArrayList<String> in: hold the database table contents to be added to server database
+     * 
+     * This method reads in objects from the client, services the request and responds with an ArrayList
+     * containing any data the user has requested.
+     * 
+     * @see java.lang.Thread#run()
+     */
     public void run(){
         try {
            	//Will also receive from client a HashMap<String TYPE, Object CONTENT> 
@@ -102,7 +122,23 @@ public class ServerThreads extends Thread{
 	         		ArrayList<String> outList = serviceSCADD(in);
 	         		System.out.println("outlist: " + outList);
 	         		outToClient.writeObject(outList);
-	         }
+	         }else if(type.equals("ADDFEEDBACK")){
+	         		System.out.println("TYPE = ADDFEEDBACK");
+	         		ArrayList<String> outList = serviceAddFeedback(in, tableSize);
+	         		outToClient.writeObject(outList);
+	         }else if(type.equals("updateBasicFEEDBACK")){
+	         		System.out.println("TYPE = updateBasicFEEDBACK");
+	         		ArrayList<String> outList = serviceBasicFeedback(in, tableSize);
+	         		outToClient.writeObject(outList);
+	         }else if(type.equals("ADDTEAM")){
+	         		System.out.println("TYPE = ADDTEAM");
+	         		ArrayList<String> outList = addTeam(in);
+	         		outToClient.writeObject(outList);
+	         }else if(type.equals("PERMISSIONS")){
+         		System.out.println("TYPE = PERMISSIONS");
+         		ArrayList<String> outList = updatePermissions(in);
+         		outToClient.writeObject(outList);
+         }
 	            
             clientSocket.close();
             return;
@@ -124,6 +160,105 @@ public class ServerThreads extends Thread{
         
     }  
     
+    /**
+     * @param in: the arraylist containing the id and permission of users whose permission is to be updated
+     * @return memberRepo.getMembers() an arraylist of the updated member table
+     */
+   private ArrayList<String> updatePermissions(ArrayList<String> in) {
+		 MemberRepo memberRepo = new MemberRepo();
+
+   	 if(!(in.isEmpty())){
+   		 for(String mem: in){
+   			 System.out.println(in + " ||| " + mem);
+   			 String[] splitter = mem.split("4h4f");
+   			 String id = splitter[0];
+   			 String permission = splitter[1];
+   			 
+   			 String permNum = "";
+   			 if(permission.equals("Basic")){
+   				 permNum = "0";
+   			 } else if(permission.equals("Admin")){
+   				 permNum = "1";
+   			 } else if(permission.equals("Leader")){
+   				 permNum = "2";
+   			 } else if(permission.equals("CAL")){
+   				 permNum = "3";
+   			 } else if(permission.equals("PAL")){
+   				 permNum = "4";
+   			 } 
+   			    			 
+   			 memberRepo.updateMember(id, permNum);
+   			 
+   		 }
+   	 }
+   	 
+   	 return memberRepo.getMembers();
+ 		
+	}
+
+   /**
+    * @param in: the arraylist containing the details of the team to be added to the Team table
+    * @return an empty arraylist as this is already added client side
+    */
+	private ArrayList<String> addTeam(ArrayList<String> in){
+   	 Team team = new Team();
+   	 
+   	 team.setTeamId(in.get(0));
+   	 team.setTeamName(in.get(1));
+   	 team.setTeamLocation(in.get(2));
+   	 team.setTeamCurPoints(in.get(3));
+   	 
+   	 TeamRepo teamRepo = new TeamRepo();
+   	 teamRepo.insert(team);
+   	 
+   	 return new ArrayList<String>();
+    }
+    
+	/**
+    * @param in: the arraylist containing the details to update a member's feedback
+    * @return an arraylist of the feedback table, the return from either getAdvTable() or getBasicFeedback()
+    */
+    private ArrayList<String> serviceBasicFeedback(ArrayList<String> in, int size){
+   	 String id = in.get(0);
+   	 FeedbackRepo feedbackRepo = new FeedbackRepo();
+
+   	 if(id.equals("ADVANCED")){
+   		 return feedbackRepo.getAdvTable(size);
+   	 }else{
+   		 return feedbackRepo.getBasicFeedback(id, size);
+   	 }
+   	 
+   	
+    }
+   
+    
+    /**
+     * @param in: an arraylist containing the one feedback entry to add to table
+     * @param: size: the size of the client's feedback table
+     * @return response: an arraylist of any entries added to the feedback table that client does not have
+     */
+    private ArrayList<String> serviceAddFeedback(ArrayList<String> in, int size){
+   	 Feedback feedback = new Feedback();
+   	 feedback.setMemberId(in.get(0));
+   	 feedback.setFixtureId(in.get(1));
+   	 feedback.setFeedbackText(in.get(2));
+   	 feedback.setAttack(in.get(3));
+   	 feedback.setDefence(in.get(4));
+   	 feedback.setEffort(in.get(5));
+   	 feedback.setOverall(in.get(6));
+   	 
+   	 FeedbackRepo feedbackRepo = new FeedbackRepo();
+   	 feedbackRepo.insert(feedback);
+   	 
+   	 ArrayList<String> response = feedbackRepo.getAdvTable(size);
+   	 
+   	 return response;
+    }
+    
+    /**
+     * @param in: an arraylist containing the S&C data to be added
+     * @return response: an arraylist of any entries added to the feedback table that client does not have
+     */
     private ArrayList<String> serviceSCADD(ArrayList<String> in){
    	  
    	  StrengthAndConditioningRepo scRepo = new StrengthAndConditioningRepo();
@@ -133,7 +268,7 @@ public class ServerThreads extends Thread{
    	  sc.setSessionTime(in.get(1));
    	  scRepo.insert(sc);
    	  
-   	  int sessionID = scRepo.getLastID();
+   	  int sessionID = scRepo.getLastID() + 1;
    	  
    	  Session scs = new Session();
 

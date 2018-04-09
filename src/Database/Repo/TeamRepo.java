@@ -61,6 +61,7 @@ public class TeamRepo {
 	  			  + "VALUES(?,?,?)";
 	  	  
 	  	  try {
+	  		   connectToDB();
 	  		  	PreparedStatement prepStatement = connection.prepareStatement(insertStatement);
 	  		  	//prepStatement.setString(1, team.getTeamId());
 	  		  	prepStatement.setString(1, team.getTeamName());

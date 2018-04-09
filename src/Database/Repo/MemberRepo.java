@@ -92,6 +92,62 @@ public class MemberRepo {
    	 
        return retVal;
     }
+    
+    public void updateMember(String id, String permissions){
+   	 connectToDB();
+   	 
+   	 ArrayList<String> member = new ArrayList<>();
+   	 
+   	 //get member details
+   	 String selectQuery = "SELECT * FROM Member WHERE MemberId = '" + id + "'";
+   	 try {
+ 			PreparedStatement prepStatement = connection.prepareStatement(selectQuery);
+ 			ResultSet rs = prepStatement.executeQuery();
+ 			if(!rs.next()){
+ 				System.out.println("THERE ARE NO MEMBERS");
+ 	   		member.add("CODE:4699:NOMEMBERS");
+ 			}else{
+ 				do{
+ 					member.add(rs.getString("MemberId"));
+ 					member.add(rs.getString("Name"));
+ 					member.add(rs.getString("Email"));
+ 					member.add(rs.getString("Password"));
+ 					member.add(rs.getString("DOB"));
+ 					member.add(rs.getString("Positions"));
+ 					member.add(rs.getString("Responsibilities"));
+ 					member.add(rs.getString("TeamId"));
+ 					member.add(permissions);
+ 				}while(rs.next());
+ 			}
+    	 } catch (SQLException e) {
+ 			e.printStackTrace();
+    	 }
+   	 
+   	 //delete member
+   	 String delete = "DELETE FROM Member WHERE MemberId = '" + id + "'";
+   	 try {
+			statement = connection.createStatement();		 
+			statement.executeUpdate(delete);
+   	 } catch (SQLException e) {
+			e.printStackTrace();
+   	 }
+   	 
+   	 //create new member
+   	 Member m = new Member();
+   	 m.setMemberId(member.get(0));
+   	 m.setName(member.get(1));
+   	 m.setEmail(member.get(2));
+   	 m.setPassword(member.get(3));
+   	 m.setDOB(member.get(4));
+   	 m.setPositions(member.get(5));
+   	 m.setResponsibilities(member.get(6));
+   	 m.setTeamId(member.get(7));
+   	 m.setPermissions(member.get(8));
+   	 
+   	 insert(m);
+   	 
+   	 closeConnection();
+    }
 
     public ArrayList<String> getMembers(){
    	 System.out.println("in get members");

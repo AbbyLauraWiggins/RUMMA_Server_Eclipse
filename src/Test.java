@@ -192,7 +192,7 @@ public class Test {
       //9: OUWRFC vs AURFC  07/03/2018
       //10: LURFC vs OUWRFC   14/03/2018
       //11: AURFC vs OUWRFC   21/03/2017
-      //12: UOBWRFC vs OUWRFC   28/03/2018
+      //12: UOBWRFC vs OUWRFC   28/04/2018
 		TeamRepo teamRepo = new TeamRepo();
 		teamRepo.connectToDB();
 		String uID = teamRepo.getTeamId("UOBWRFC");
@@ -267,7 +267,7 @@ public class Test {
       tf.setAwayTeam(oID);
       teamFixturesRepo.insert(tf);
 
-      tf.setFixtureDate("28/03/2018");
+      tf.setFixtureDate("28/04/2018");
       tf.setFixtureLocation("B15 2QW");
       tf.setHomeTeam(uID);
       tf.setAwayTeam(oID);

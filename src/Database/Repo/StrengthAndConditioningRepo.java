@@ -54,7 +54,6 @@ public class StrengthAndConditioningRepo {
    	 int retVal = 0; //if update happens correctly, retVal = 1, else = 0
    	 String insertStatement = "INSERT INTO " + StrengthAndConditioning.TABLE
    			 + "("
-             //+ StrengthAndConditioning.KEY_SessionId  + ","
              + StrengthAndConditioning.KEY_SessionDate + ","
              + StrengthAndConditioning.KEY_SessionTime + ") "
 	  			 + "VALUES(?,?)";

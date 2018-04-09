@@ -1,5 +1,6 @@
 package Database.Data;
 import java.sql.*;
+import Database.Repo.FeedbackRepo;
 import Database.Repo.FixtureRepo;
 import Database.Repo.KPIRepo;
 import Database.Repo.MemberRepo;
@@ -8,6 +9,7 @@ import Database.Repo.SessionRepo;
 import Database.Repo.StrengthAndConditioningRepo;
 import Database.Repo.TeamFixturesRepo;
 import Database.Repo.TeamRepo;
+import Database.Schema.Feedback;
 import Database.Schema.Fixture;
 import Database.Schema.KPI;
 import Database.Schema.Member;
@@ -65,6 +67,7 @@ public class DatabaseSetup {
 			statement.executeUpdate(TeamFixturesRepo.createTable());
 			statement.executeUpdate(NoticeRepo.createTable());
 			statement.executeUpdate(KPIRepo.createtable());
+			statement.executeUpdate(FeedbackRepo.createTable());
 		} catch (SQLException ex1) {
 			ex1.printStackTrace();
 		}
@@ -83,6 +86,8 @@ public class DatabaseSetup {
 			statement.executeUpdate("DROP TABLE IF EXISTS " + TeamFixtures.TABLE);
 			statement.executeUpdate("DROP TABLE IF EXISTS " + Notice.TABLE);
 			statement.executeUpdate("DROP TABLE IF EXISTS " + KPI.TABLE);
+			statement.executeUpdate("DROP TABLE IF EXISTS " + Feedback.TABLE);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
